@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainor:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Mon 07 Jul 2014 10:30:14 AM CEST
+" Last Changed:	Fri 11 Jul 2014 12:30:01 AM CEST
 " Version:	0.1
 "
 " Description:
@@ -18,21 +18,36 @@ let g:loaded_ab_prefix = 1
 "
 let s:expansions = {}
 
-function! s:prefix_expand( prefix, ab )
-    if !has_key( s:expansions, a:prefix ) 
-		\ || !has_key( s:expansions[a:prefix], a:ab )
+function! s:prefix_expand( ab )
+    "echomsg 'ab='.a:ab
+    if !has_key( s:expansions, a:ab ) 
 	let rep = a:ab
 	let rrep = ''
 	let gobble = ''
     else
 	let line = getline( '.' )[ :col('.')-1 ]
-	"echomsg 'prefix='.a:prefix 'ab='.a:ab 'line='.line.'.'
-	if match( line, a:prefix . 'x$' ) >= 0
-	    " Matched; replace text.
-	    let rep = s:expansions[a:prefix][a:ab]['rep']
-	    let rrep = s:expansions[a:prefix][a:ab]['rrep']
-	    let gobble = s:expansions[a:prefix][a:ab]['gobble']
-	else
+	let matched = 0
+	for prefix in keys( s:expansions[a:ab])
+	    "echomsg 'prefix='.prefix 'ab='.a:ab 'line='.line.'.'
+	    if match( line, prefix . 'x$' ) >= 0
+		" Matched; replace text.
+		let expn = s:expansions[a:ab][prefix]
+
+		if expn['eval']
+		    let rep = (expn['rep'] != '') ?  eval( expn['rep'] ) : ''
+		    let rrep = (expn['rrep'] != '') ? eval( expn['rrep'] ) : ''
+		else
+		    let rep = expn['rep']
+		    let rrep = expn['rrep']
+		endif
+		let gobble = expn['gobble']
+
+		let matched = 1
+		break
+	    endif
+	endfor
+
+	if !matched
 	    let rep = a:ab
 	    let rrep = ''
 	    let gobble = ''
@@ -55,27 +70,31 @@ function! s:prefix_expand( prefix, ab )
 endfunction
 
 function! AbDefineExpansion( iabargs, prefix, ab, rep, ... )
-    let iabargs = (a:iabargs == 'NONE') ? '' : a:rep
+    "echomsg 'iabargs='.a:iabargs 'prefix='.a:prefix 'ab='.a:ab 'rep='.a:rep
+
+    let iabargs = (a:iabargs == 'NONE') ? '' : a:iabargs
     let rep = (a:rep == 'NONE') ? '' : a:rep
 
     let rrep = (a:0 >= 1) ? a:1 : ''
     let gobble = (a:0 >= 2) ? a:2 : ''
+    let eval = (a:0 >= 3) ? a:3 : 0
 
     if rrep == 'NONE' | let rrep = '' | endif
     if gobble == 'NONE' | let gobble = '' | endif
 
-    if !has_key( s:expansions, a:prefix )
-	let s:expansions[a:prefix] = {}
+    if !has_key( s:expansions, a:ab )
+	let s:expansions[a:ab] = {}
     endif
-    let s:expansions[a:prefix][a:ab] =
+    let s:expansions[a:ab][a:prefix] =
 	    \ { 
 		\ 'rep': rep,
 		\ 'rrep': substitute( rrep, '\\n', '\r', 'g' ),
-		\ 'gobble': gobble
+		\ 'gobble': gobble,
+		\ 'eval': eval
 	    \ }
+    let iab_ab = substitute( a:ab, '|', '\\|', 'g' )
     exec 'iab' iabargs a:ab 
-	    \ "x<left><c-r>=<SID>prefix_expand('".a:prefix."',"
-	    \	   "'".a:ab."')<cr>"
+	    \ "x<left><c-r>=<SID>prefix_expand('".iab_ab."')<cr>"
 endfunction
 
 " Command to define more expansions
