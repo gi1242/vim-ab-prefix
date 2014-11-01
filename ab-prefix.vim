@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainor:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 11 Jul 2014 12:30:01 AM CEST
+" Last Changed:	Fri 31 Oct 2014 11:29:54 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -19,19 +19,41 @@ let g:loaded_ab_prefix = 1
 let s:expansions = {}
 
 function! s:prefix_expand( ab )
+    " Grab next char to match suffixes
+    let c = nr2char( getchar(0))
+
     "echomsg 'ab='.a:ab
     if !has_key( s:expansions, a:ab ) 
 	let rep = a:ab
 	let rrep = ''
-	let gobble = ''
     else
 	let line = getline( '.' )[ :col('.')-1 ]
 	let matched = 0
 	for prefix in keys( s:expansions[a:ab])
 	    "echomsg 'prefix='.prefix 'ab='.a:ab 'line='.line.'.'
 	    if match( line, prefix . 'x$' ) >= 0
-		" Matched; replace text.
-		let expn = s:expansions[a:ab][prefix]
+		" Matched prefix. Check suffixes.
+		if has_key( s:expansions[a:ab][prefix], c )
+		    " Suffix matched.
+		    let expn = s:expansions[a:ab][prefix][c]
+
+		    " Gobble is now interpreted as boolean.
+		    if expn['gobble']
+			let c = ''
+		    endif
+		elseif has_key( s:expansions[a:ab][prefix], 'NONE' )
+		    " No suffix matched.
+		    let expn = s:expansions[a:ab][prefix]['NONE']
+
+		    " Gobble spaces if necessary
+		    let gobble = expn['gobble']
+		    if gobble != '' && c =~ gobble
+			let c = ''
+		    endif
+		else
+		    " Prefix matches, but not suffix. Break out. No match.
+		    break
+		endif
 
 		if expn['eval']
 		    let rep = (expn['rep'] != '') ?  eval( expn['rep'] ) : ''
@@ -40,7 +62,6 @@ function! s:prefix_expand( ab )
 		    let rep = expn['rep']
 		    let rrep = expn['rrep']
 		endif
-		let gobble = expn['gobble']
 
 		let matched = 1
 		break
@@ -50,14 +71,7 @@ function! s:prefix_expand( ab )
 	if !matched
 	    let rep = a:ab
 	    let rrep = ''
-	    let gobble = ''
 	endif
-    endif
-
-    " Gobble spaces if necessary
-    let c = nr2char( getchar(0))
-    if gobble != '' && c =~ gobble
-	let c = ''
     endif
 
     " Do the replacement.
@@ -75,17 +89,25 @@ function! AbDefineExpansion( iabargs, prefix, ab, rep, ... )
     let iabargs = (a:iabargs == 'NONE') ? '' : a:iabargs
     let rep = (a:rep == 'NONE') ? '' : a:rep
 
-    let rrep = (a:0 >= 1) ? a:1 : ''
-    let gobble = (a:0 >= 2) ? a:2 : ''
-    let eval = (a:0 >= 3) ? a:3 : 0
+    let rrep	= (a:0 >= 1) ? a:1 : ''
+    let gobble	= (a:0 >= 2) ? a:2 : ''
+    let eval	= (a:0 >= 3) ? a:3 : 0
+    let suffix	= (a:0 >= 4) ? a:4 : ''
 
-    if rrep == 'NONE' | let rrep = '' | endif
-    if gobble == 'NONE' | let gobble = '' | endif
+    if rrep	== 'NONE' | let rrep	= '' | endif
+    if gobble	== 'NONE' | let gobble	= '' | endif
+    if eval	== 'NONE' | let eval	= 0  | endif
+
+    if suffix == '' | let suffix = 'NONE' | endif
 
     if !has_key( s:expansions, a:ab )
 	let s:expansions[a:ab] = {}
     endif
-    let s:expansions[a:ab][a:prefix] =
+    if !has_key( s:expansions[a:ab], a:prefix )
+	let s:expansions[a:ab][a:prefix] = {}
+    endif
+
+    let s:expansions[a:ab][a:prefix][suffix] =
 	    \ { 
 		\ 'rep': rep,
 		\ 'rrep': substitute( rrep, '\\n', '\r', 'g' ),
