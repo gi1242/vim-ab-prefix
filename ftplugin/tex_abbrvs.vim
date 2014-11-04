@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainor:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Mon 03 Nov 2014 11:17:32 PM EST
+" Last Changed:	Mon 03 Nov 2014 11:45:09 PM EST
 " Version:	0.1
 "
 " Description:
@@ -147,18 +147,16 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Cenv	bsst    subsubtopics
 
     " Automatically close environments
-    if exists( '*TexGetEnvName' )
-	function! CloseEnv()
-	    let [env, fold] = TexGetEnvName()
-	    if env == ''
-		return 'end{'
-	    else
-		normal <<
-		return 'end{'.env.'}'. tr( fold, '{', '}' )
-	    endif
-	endfunction
-	Bab	en	CloseEnv() NONE [\ \t] 1
-    endif
+    function! CloseEnv()
+	let [env, fold] = exists( '*TexGetEnvName' ) ? TexGetEnvName() : ['', '']
+	if env == ''
+	    return 'end{'
+	else
+	    normal <<
+	    return 'end{'.env.'}'. tr( fold, '{', '}' )
+	endif
+    endfunction
+    Bab	en	CloseEnv() NONE [\ \t] 1
 
     " Misc commands that take an argument.
     " (Insert trailing { forcibly, and ignore next typed char)
