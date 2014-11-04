@@ -1,0 +1,152 @@
+*ab-prefix* Vim plugin to conditionally expand abbreviations.
+
+DESCRIPTION						       *ab-prefix.vim*
+
+This plugin provides the ability to define abbreviations that expand only if a
+particular prefix is matched.
+
+Example:~
+
+The command
+>
+    AbDef <buffer> \\\\ be beta
+<
+will define an insert mode expansion {be} that expands to {beta} ONLY if
+preceded with a backslash.
+
+This plugin was mainly written for use with |TeX| files, and the accompanying
+|tex_abbrvs.vim| file provides lots of abbreviations that can be used as
+examples.
+
+								       *AbDef*
+
+The function |AbDefineExpansion| (or the command |AbDef|) defines the required
+expansion. It is called as follows: >
+
+    AbDef iabargs prefix ab rep rrep gobble eval suffix
+>
+The arguments are as follows:
+
+    {iabargs}	    Arguments passed to |iab| when defining the abbreviation
+    {prefix}	    |regexp| that match before the abbreviation for
+		    replacement to take place.
+    {ab}	    The abbreviation.
+    {rep}	    Replacement.
+    {rrep}	    Optional right replacement (text to add after the cursor).
+    {gobble}	    If provided and the character that triggers the
+		    abbreviation matches this |regexp|, then it is gobbled.
+    {eval}	    If true, {rep} and {rrep} are passed through |eval()|
+		    before being used as replacements.
+    {suffix}	    If provided, the character that triggers the abbreviation
+		    must match this |regexp| before replacement is done. If a
+		    {suffix} is provided, {gobble} is treated as a boolean
+		    variable. If true, this character is gobbled.
+
+The arguments {rrep} {gobble} {eval} and {suffix} are all optional and can be
+omitted entirely. Any of these arguments can be set to {NONE} to explicitly
+specify them as empty or unset.
+
+							   *AbDefineExpansion*
+
+This is the function version of |AbDef| command, with the same arguments.
+
+							      *tex_abbrvs.vim*
+
+This file provides numerous conditional abbreviations that are useful when
+typing TeX documents.
+
+Greek letters:~
+
+    Use '\' followed by first two letters. (E.g. "\al"). The var versions are
+    as follows 
+
+	vp	: varphi
+	vpi	: varpi
+	ve	: varepsilon
+
+    The only exception is {beta}, which requires "\bet" (to avoid confusion
+    with the \begin expansions.)
+
+References:~
+
+    Typing the first two letters of the object (theorem, lemma etc.) followed
+    by a "~" expands to what's used to reference them. For instance, typing
+    "eq~" produces "equation~\eqref{eqn".
+
+    For plurals, include an "s" before the "~". E.g. typing "ths~" produces
+    "theorems~\ref{thm"
+
+Environments:~
+
+    Use '\' followed by the first two letters of the environment to get a
+    complete environment. E.g. typing >
+
+	\beq<space>
+<
+    produces >
+
+	\begin{equation}
+	\end{equation}
+<
+    and places the character on the first line.
+
+    Following the environment with a "[" instead of a space positions for
+    optional arguments: E.g. typing >
+
+	\ben[
+<
+    produces >
+
+	\begin{enumerate}[]
+	\end{enumerate}
+<
+    and places the cursor between "[" and "]". Using "{" instead, produces the
+    corresponding "{}" version.
+
+    Following the environment with a "\" positions for labeling. Namely,
+    typing >
+
+	\beq\
+<
+    produces >
+
+	\begin{equation}\label{}
+	\end{equation}
+<
+    and places the cursor between "{" and "}".
+    
+    Finally following the environment name with a "*" produces the starred
+    version. Also some environments come with fold markers automatically. For
+    instance >
+
+	\bth<space>
+<
+    produces >
+
+	\begin{theorem}%{{{
+	\end{theorem}%}}}
+<
+    and places the cursor at the end of the first line.
+
+Spaces:~
+
+    Typing "R2" produces "R^2", unless preceded by an "^" or "_" in which case
+    it produces "{R^2}". This also works for various spaces (Rd, Lp, etc.).
+    This means you can type >
+
+	\int_R2 \ab{f} \, d\la< \oo \text{for all $f \in L2$.}
+<
+    to produce >
+
+	\int_{\R^2} \abs{f}^2 \, d\lambda < \infty \text{for all $f \in L^2$.}
+
+Commands:~
+
+    Many commands can be expanded with "\" and the first two letters. Some are
+    time saving shorthands (e.g. \dx produces \partial_x). For a complete
+    list, "Use the source, Luke".
+
+>
+ Maintainer : GI <gi1242@nospam.com> (replace nospam with gmail)
+ Modified   : Mon 03 Nov 2014 09:03:40 PM EST
+ vim: ft=help:tw=78:iskeyword=!-~,^*,^|,^":ai:
