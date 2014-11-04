@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainor:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Mon 03 Nov 2014 11:45:09 PM EST
+" Last Changed:	Tue 04 Nov 2014 12:11:23 AM EST
 " Version:	0.1
 "
 " Description:
@@ -385,7 +385,19 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 endif "}}}
 
 " Depreciated constructs
-iab <buffer> $$	\begin{equation*}
+"iab <buffer> $$	\begin{equation*}
+
+" function! DollarDollar()
+"     if synIDattr( synID( line('.'), col('.'), 0 ), 'name' ) =~ '\C^texMathZone'
+" 	normal <<
+" 	return '\end{equation*}'
+"     else
+" 	return '\begin{equation*}'
+"     fi
+" endfunction
+" AbDef <buffer> .\? $$ DollarDollar() NONE [\ \t] 1
+
+AbDef <buffer> .\? $$ \begin{equation*} \n\end{equation*} [\ \t] 0
 
 " Greek letters
 " Disabled for now. The \al notation is more intuitive (even though it
