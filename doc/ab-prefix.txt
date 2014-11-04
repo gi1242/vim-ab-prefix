@@ -57,76 +57,102 @@ typing TeX documents.
 
 Greek letters:~
 
-    Use '\' followed by first two letters. (E.g. "\al"). The var versions are
-    as follows 
+    Use '\' followed by first two letters. Here are a few.
 
-	vp	: varphi
-	vpi	: varpi
-	ve	: varepsilon
+	Text		Replacement	Notes~
 
-    The only exception is {beta}, which requires "\bet" (to avoid confusion
-    with the \begin expansions.)
+	\al	    	\alpha
+	\bet	    	\beta		(Because \be is used for \begin)
+	\ga	    	\gamma
 
-References:~
+    Etc. For upper case letters, just upper case the first letter (e.g. "\Si"
+    produces "\Sigma").
 
-    Typing the first two letters of the object (theorem, lemma etc.) followed
-    by a "~" expands to what's used to reference them. For instance, typing
-    "eq~" produces "equation~\eqref{eqn".
+    The "var" variants are as follows:
 
-    For plurals, include an "s" before the "~". E.g. typing "ths~" produces
-    "theorems~\ref{thm"
+	Text		Replacement~
+
+	\ve	    	\varepsilon
+	\vt	    	\vartheta
+	\vpi	    	\varpi
+	\vr	    	\varrho
+	\vs	    	\varsigma
+	\vp	    	\varphi
+
+									 *Bab*
+
+    To easily define your own "\" commands, use the Bab commands. This is
+    equivalent to >
+
+	AbDef  <buffer> \\\\ <args>
+
 
 Environments:~
 
     Use '\' followed by the first two letters of the environment to get a
-    complete environment. E.g. typing >
-
-	\beq<space>
-<
-    produces >
-
-	\begin{equation}
-	\end{equation}
-<
-    and places the character on the first line.
-
-    Following the environment with a "[" instead of a space positions for
-    optional arguments: E.g. typing >
-
-	\ben[
-<
-    produces >
-
-	\begin{enumerate}[]
-	\end{enumerate}
-<
-    and places the cursor between "[" and "]". Using "{" instead, produces the
-    corresponding "{}" version.
-
-    Following the environment with a "\" positions for labeling. Namely,
-    typing >
-
-	\beq\
-<
-    produces >
-
-	\begin{equation}\label{}
-	\end{equation}
-<
-    and places the cursor between "{" and "}".
+    complete environment. In the examples below the cursor is on the "X" after
+    replacement.
     
-    Finally following the environment name with a "*" produces the starred
-    version. Also some environments come with fold markers automatically. For
-    instance >
+	Text		Replacement~
 
-	\bth<space>
-<
-    produces >
+	\beq<space>	\begin{equation}X
+			\end{equation}
 
-	\begin{theorem}%{{{
-	\end{theorem}%}}}
+	\beq*		\begin{equation*}X
+			\end{equation*}
+
+	\beq\		\begin{equation}\label{X
+			\end{equation}
+
+	\beq[		\begin{equation}[X]
+			\end{equation}
+
+	\beq{		\begin{equation}{X}
+			\end{equation}
+
+    Some environments are pre-defined with fold markers (theorems, lemmas).
+    The analogue of the above with fold markers is as follows:
+
+	\bth<space>	\begin{theorem}%{{{X
+			\end{theorem}%}}}
+
+	\bth*		\begin{theorem*}%{{{X
+			\end{theorem*}%}}}
+
+	\bth\		\begin{theorem}\label{X}%{{{
+			\end{theorem}%}}}
+
+	\bth[		\begin{theorem}[X]%{{{
+			\end{theorem}%}}}
+
+	\bth{		\begin{theorem}{X}%{{{
+			\end{theorem}%}}}
+
+    If you don't want the end tag inserted automatically, you can do it in
+    stages. The first two letters of the environment name after "\begin{" or
+    "\end{" will be expanded to the environment name. For instance, typing >
+
+	\be{eq}
 <
-    and places the cursor at the end of the first line.
+    results in
+>
+	\begin{equation}
+<
+    Further, if you have the |tex_autoclose| ftplugin, then the text "\en" is
+    automatically closes the last open environment.
+
+    NOTE: The construct "$$" has been depreciated in LaTeX for a while now. So
+    this plugin automatically replaces a "$$" outside math environments with
+    "\begin{equation*}" and with "\end{equation*}" inside math environments.
+
+
+					       *Cenv* *Cenvf* *Cenvs* *Cenvfs*
+    To create your own environments use the one of the |Cenv| commands. >
+
+	Cenv {ab} {envname}
+<
+    To also set up a starred version use the |Cenvs| version, for fold markers
+    use |Cenvf|, and for both use |Cenvfs|.
 
 Spaces:~
 
@@ -146,7 +172,17 @@ Commands:~
     time saving shorthands (e.g. \dx produces \partial_x). For a complete
     list, "Use the source, Luke".
 
+References:~
+
+    Typing the first two letters of the object (theorem, lemma etc.) followed
+    by a "~" expands to what's used to reference them. For instance, typing
+    "eq~" produces "equation~\eqref{eqn".
+
+    For plurals, include an "s" before the "~". E.g. typing "ths~" produces
+    "theorems~\ref{thm"
+
+
 >
  Maintainer : GI <gi1242@nospam.com> (replace nospam with gmail)
- Modified   : Mon 03 Nov 2014 09:03:40 PM EST
+ Modified   : Tue 04 Nov 2014 04:11:28 PM EST
  vim: ft=help:tw=78:iskeyword=!-~,^*,^|,^":ai:
