@@ -21,3 +21,11 @@ produces
     \begin{equation*}
         \varphi(x) = \int_{\R^2} e^{-2\pi i x \cdot \xi} \hat \vp(\xi) \, d\xi.
     \end{equation*}
+
+If you also have the [tex_autoclose](http://www.vim.org/scripts/script.php?script_id=920) plugin installed, then you can type `\en` to close any open environment.
+
+## Links.
+
+* [Github page](https://github.com/gi1242/vim-ab-prefix)
+
+* [Vim script page](http://www.vim.org/scripts/script.php?script_id=5049)
