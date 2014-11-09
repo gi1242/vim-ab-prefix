@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainor:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Tue 04 Nov 2014 12:11:23 AM EST
+" Last Changed:	Sat 08 Nov 2014 10:01:17 PM EST
 " Version:	0.1
 "
 " Description:
@@ -107,6 +107,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Cenv	bmld	multlined
     Cenv	bmud	multlined
 
+    " Math environments
+    Cenv	bpm	pmatrix
+    Cenv	bma	matrix
+
     " Theorems, etc.
     Cenvfs	bth	theorem
     Cenvfs	ble     lemma
@@ -141,6 +145,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Cenvf	brth	rtheorem
     Cenvf	brle	rlemma
     Cenvf	brpr	rproposition
+    Cenv	beq	beqn
     Cenv	beqn    beqn
     Cenv	bto     topics
     Cenv	bst     subtopics
@@ -169,9 +174,9 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab	sp	subparagraph{       	NONE .
 
     Bab	tc	textcolor{		NONE .
-    Bab	mb	mathbb{    	    	NONE .
-    Bab	mc	mathcal{    	    	NONE .
-    Bab	ms	mathscr{    	    	NONE .
+    Bab	mb	mathbb
+    Bab	mc	mathcal
+    Bab	ms	mathscr
     Bab	li	linewidth	    	NONE [\ \t]
     Bab	inc	includegraphics[width=	NONE [\ \t]
     Bab	dis	displaystyle
@@ -183,7 +188,9 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     "AbDef  <buffer> begin{[a-z]\\+\\*\\?}\\\\ la label NONE [\ \t]
 
     Bab	xr	xrightarrow{   	    	NONE .
+    Bab	xr	xrightarrow   	    	NONE 0 0 [
     Bab	xl	xleftarrow{    	    	NONE .
+    Bab	xl	xleftarrow    	    	NONE 0 0 [
     Bab ov	overline{ 		NONE .
     Bab un	underline{ 		NONE .
     Bab ul	underline{ 		NONE .
@@ -231,6 +238,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab	gt	gradt
     Bab	gi	gradinv
     Bab	gp	gradperp
+    Bab cd	cdot
 
     Bab qu	question
     Bab pa	part
@@ -315,6 +323,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Sab R3	\R^3
     Sab R4	\R^4
 
+    Sab H1	H^1
+    Sab H2	H^2
+    Sab Hm1	H^{-1}
+
     AbDef <buffer> . Lpp	{L^{	}}	[\ \t]
     AbDef <buffer> . lpp	{\ell^{ }}	[\ \t]
     AbDef <buffer> . rd	{\R^{	}}	[\ \t]
@@ -358,6 +370,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Dref Eq	Equation~\eqref{eqn
     Dref eqs    equations~\eqref{eqn
     Dref Eqs    Equations~\eqref{eqn
+    Dref in     inequality~\eqref{eqn
+    Dref In     Inequality~\eqref{eqn
+    Dref ins    inequalities~\eqref{eqn
+    Dref ins    inequalities~\eqref{eqn
     Dref sy     system~\eqref{eqn
     Dref se	section~\ref{sxn
     Dref ses	sections~\ref{sxn
