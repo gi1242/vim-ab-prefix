@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainor:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sat 08 Nov 2014 10:01:17 PM EST
+" Last Changed:	Sun 09 Nov 2014 05:35:49 PM EST
 " Version:	0.1
 "
 " Description:
@@ -139,18 +139,6 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Cenv	bqu	questions
     Cenv	bpa	parts
 
-    " My custom environments
-    Cenvf	bsl	slide
-    Cenvf	bto     todo
-    Cenvf	brth	rtheorem
-    Cenvf	brle	rlemma
-    Cenvf	brpr	rproposition
-    Cenv	beq	beqn
-    Cenv	beqn    beqn
-    Cenv	bto     topics
-    Cenv	bst     subtopics
-    Cenv	bsst    subsubtopics
-
     " Automatically close environments
     function! CloseEnv()
 	let [env, fold] = exists( '*TexGetEnvName' ) ? TexGetEnvName() : ['', '']
@@ -182,7 +170,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab	dis	displaystyle
     Bab tb	textbf{			NONE .
     Bab em	emph{			NONE .
-    Bab it	textit{			NONE .
+    "Bab tit	textit{			NONE .
+    Bab it	item
 
     Bab	lab	label 	    	    	NONE [\ \t]
     "AbDef  <buffer> begin{[a-z]\\+\\*\\?}\\\\ la label NONE [\ \t]
@@ -233,19 +222,12 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab	d8	partial_8
     Bab	d9	partial_9
     Bab	dth	partial_\theta
-    Bab	cu	curl
-    Bab	gr	grad
-    Bab	gt	gradt
-    Bab	gi	gradinv
-    Bab	gp	gradperp
     Bab cd	cdot
 
     Bab qu	question
     Bab pa	part
 
     Bab	oo	infty
-
-    Bab bso	ifsol\begin{sol}%{{{		\end{sol}\fi%}}} [\ \t]
 
     if 1 " Greek letters %{{{
 	" Lower case (ordered as in "texdoc symbols")
@@ -317,6 +299,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Sab l2	\ell^2
     Sab loo	\ell^\infty
 
+    " Requires \newcommand{\R}{\mathbb{R}}
     Sab Rd	\R^d
     Sab Rn	\R^n
     Sab R2	\R^2
@@ -329,10 +312,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
     AbDef <buffer> . Lpp	{L^{	}}	[\ \t]
     AbDef <buffer> . lpp	{\ell^{ }}	[\ \t]
-    AbDef <buffer> . rd	{\R^{	}}	[\ \t]
-    AbDef <buffer> . rn	{\R^{	}}	[\ \t]
+    AbDef <buffer> . rd		{\R^{	}}	[\ \t]
+    AbDef <buffer> . rn		{\R^{	}}	[\ \t]
 
-    " Parenthesis and norms
+    " Parenthesis and norms. Requires \DeclarePairedDelimiter{\paren}{(}{)}
     Bab pa	    paren	    NONE [\ \t]
     Bab pab	    paren[\big]{    NONE [{\ \t]
     Bab paB	    paren[\Big]{    NONE [{\ \t]
@@ -378,26 +361,6 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Dref se	section~\ref{sxn
     Dref ses	sections~\ref{sxn
     " }}}
-
-
-    " My markup changes
-    Bab rm	remove{	    NONE [{\ \t]
-    Bab re	replace{    NONE [{\ \t]
-    Bab ad	add{	    NONE [{\ \t]
-    "Bab sid	sidenote{   NONE [{\ \t]
-    "Bab side	sidenote{   NONE [{\ \t]
-    Bab sn	sidenote{   NONE [{\ \t]
-    Bab hl	highlight{  NONE [{\ \t]
-
-    " For the oseen paper
-    Bab	dtau	partial_\tau
-    iab <buffer> L2w	    {L^2_w}
-    iab <buffer> dxi	    \, d\xi
-    iab <buffer> dmu	    \, d\mu
-    iab <buffer> dla	    \, d\lambda
-
-    " For vv notes with Lopeses
-    Bab	dtir	partial_{\tilde\ r}
 endif "}}}
 
 " Depreciated constructs
