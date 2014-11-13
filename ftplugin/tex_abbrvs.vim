@@ -1,13 +1,11 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainor:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sun 09 Nov 2014 05:35:49 PM EST
+" Last Changed:	Thu 13 Nov 2014 01:34:29 PM EST
 " Version:	0.1
 "
 " Description:
 "   Various TeX abbreviations and mappings in insert mode.
-
-echomsg strftime("%c").':' "Loaded abbreviations"
 
 "
 " Non math mode, standard abbreviations.
@@ -153,8 +151,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
     " Misc commands that take an argument.
     " (Insert trailing { forcibly, and ignore next typed char)
-    "Bab	be	begin{			NONE [[:space:]{] 
-    Bab	be	begin{		    	NONE .
+    "Bab	beg	begin{			NONE [[:space:]{] 
+    Bab	beg	begin{		    	NONE .
     Bab	sec	section{            	NONE .
     Bab	ss	subsection{	    	NONE .
     Bab	sss	subsubsection{      	NONE .
@@ -229,10 +227,14 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
     Bab	oo	infty
 
+    Bab ha	\frac{1}{2}
+    Bab ot	\frac{1}{3}
+    Bab of	\frac{1}{4}
+
     if 1 " Greek letters %{{{
 	" Lower case (ordered as in "texdoc symbols")
 	Bab al	alpha
-	Bab bet	beta
+	Bab be	beta
 	Bab ga	gamma
 	Bab de	delta
 	Bab ep	epsilon
@@ -278,10 +280,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
     " Abbreviations for spaces (Lp, Rd, etc.)
     function! s:define_space( abbrv, rep )
-	call AbDefineExpansion( '<buffer>', '\v([^_^]|^)', a:abbrv, a:rep,
-		    \ 'NONE', '[ \t]' )
-	call AbDefineExpansion( '<buffer>', '[_^]', a:abbrv, '{'.a:rep.'}',
-		    \ 'NONE', '[ \t]' )
+	call AbDefineExpansion( '<buffer>', '\v([^_^]|^)', a:abbrv, a:rep )
+	call AbDefineExpansion( '<buffer>', '[_^]', a:abbrv, '{'.a:rep.'}' )
     endfunction
     command! -nargs=+ Sab :call s:define_space( <f-args> )
 

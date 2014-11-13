@@ -59,10 +59,10 @@ Greek letters:~
 
     Use '\' followed by first two letters. Here are a few.
 
-	Text		Replacement	Notes~
+	Text		Replacement~
 
 	\al	    	\alpha
-	\bet	    	\beta		(Because \be is used for \begin)
+	\be	    	\beta
 	\ga	    	\gamma
 
     Etc. For upper case letters, just upper case the first letter (e.g. "\Si"
@@ -132,7 +132,7 @@ Environments:~
     stages. The first two letters of the environment name after "\begin{" or
     "\end{" will be expanded to the environment name. For instance, typing >
 
-	\be{eq}
+	\beg{eq}
 <
     results in
 >
@@ -184,5 +184,5 @@ References:~
 
 >
  Maintainer : GI <gi1242@nospam.com> (replace nospam with gmail)
- Modified   : Tue 04 Nov 2014 04:11:28 PM EST
+ Modified   : Thu 13 Nov 2014 02:08:37 PM EST
  vim: ft=help:tw=78:iskeyword=!-~,^*,^|,^":ai:
