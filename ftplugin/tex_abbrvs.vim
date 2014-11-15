@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
-" Maintainor:	GI <gi1242@nospam.com> (replace nospam with gmail)
+" Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Thu 13 Nov 2014 01:34:29 PM EST
+" Last Changed:	Fri 14 Nov 2014 12:02:47 AM EST
 " Version:	0.1
 "
 " Description:
@@ -172,6 +172,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab it	item
 
     Bab	lab	label 	    	    	NONE [\ \t]
+    Bab nn	nonumber
+
     "AbDef  <buffer> begin{[a-z]\\+\\*\\?}\\\\ la label NONE [\ \t]
 
     Bab	xr	xrightarrow{   	    	NONE .
@@ -227,9 +229,9 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
     Bab	oo	infty
 
-    Bab ha	\frac{1}{2}
-    Bab ot	\frac{1}{3}
-    Bab of	\frac{1}{4}
+    Bab ha	frac{1}{2}
+    Bab ot	frac{1}{3}
+    Bab of	frac{1}{4}
 
     if 1 " Greek letters %{{{
 	" Lower case (ordered as in "texdoc symbols")
@@ -282,6 +284,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     function! s:define_space( abbrv, rep )
 	call AbDefineExpansion( '<buffer>', '\v([^_^]|^)', a:abbrv, a:rep )
 	call AbDefineExpansion( '<buffer>', '[_^]', a:abbrv, '{'.a:rep.'}' )
+	call AbDefineExpansion( '<buffer>', '[_^]', a:abbrv, '{'.a:rep, ')}',
+		    \ 0, 0, '(' )
     endfunction
     command! -nargs=+ Sab :call s:define_space( <f-args> )
 
@@ -353,10 +357,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Dref Eq	Equation~\eqref{eqn
     Dref eqs    equations~\eqref{eqn
     Dref Eqs    Equations~\eqref{eqn
-    Dref in     inequality~\eqref{eqn
-    Dref In     Inequality~\eqref{eqn
-    Dref ins    inequalities~\eqref{eqn
-    Dref ins    inequalities~\eqref{eqn
+    Dref ieq    inequality~\eqref{eqn
+    Dref Ieq	Inequality~\eqref{eqn
+    Dref ieqs  	inequalities~\eqref{eqn
+    Dref ieqs  	inequalities~\eqref{eqn
     Dref sy     system~\eqref{eqn
     Dref se	section~\ref{sxn
     Dref ses	sections~\ref{sxn
