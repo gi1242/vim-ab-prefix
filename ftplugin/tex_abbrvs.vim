@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Tue 18 Nov 2014 04:01:24 PM EST
+" Last Changed:	Sun 23 Nov 2014 03:12:06 PM EST
 " Version:	0.1
 "
 " Description:
@@ -28,8 +28,116 @@ iab <buffer> cadlag	c\`adl\`ag
 
 " Conditional abbreviations
 if exists( 'g:loaded_ab_prefix' ) "{{{
+    " Commands
+    " {{{
     command! -nargs=+ Bab	:AbDef  <buffer> \\\\ <args>
+    
+    " Commands with arguments
+    function! s:new_command( ab, cmd, opt )
+	call AbDefineExpansion( '<buffer>', '\\', a:ab, a:cmd.'{', '', '[ \t{]' )
+	if a:opt
+	    call AbDefineExpansion( '<buffer>', '\\', a:ab, a:cmd, '', 0, 0, '[' )
+	endif
+    endfunction
 
+    command! -nargs=+ Baba	:call s:new_command( <f-args>, 0 )
+    command! -nargs=+ Babo	:call s:new_command( <f-args>, 1 )
+
+    " Misc commands that take an argument.
+    " (Insert trailing { forcibly, and ignore next typed char)
+    "Bab	beg	begin{			NONE [[:space:]{] 
+    Bab	 be	begin		    	NONE 0 0 {
+    Baba beg	begin
+    Babo sec	section
+    Babo ss	subsection
+    Babo sss	subsubsection
+    Babo para	paragraph
+    Babo sp	subparagraph
+
+    Bab  mb	mathbb
+    Bab  mc	mathcal
+    Bab  ms	mathscr
+    Bab  li	linewidth	    	NONE [\ \t]
+    Bab  inc	includegraphics[width=	NONE [\ \t]
+    Bab  in	includegraphics[width=	NONE 1 0 [
+    Bab  in	includegraphics		NONE 0 0 {
+    Bab  dis	displaystyle
+    Baba tb	textbf
+    Baba em	emph
+    Baba te	text
+    "Baba tit	textit
+    Bab  it	item
+
+    Baba lab	label
+    Bab  la	label 	    	    	NONE 0 0 {
+    Bab  nn	nonumber
+
+    "AbDef  <buffer> begin{[a-z]\\+\\*\\?}\\\\ la label NONE [\ \t]
+
+    Babo xr	xrightarrow
+    Babo xl	xleftarrow
+
+    Baba ov	overline
+    Baba un	underline
+    Baba ul	underline
+    Baba ob	overbrace
+    Baba ub	underbrace
+
+    Baba fr	frac
+    Babo sq	sqrt
+    Baba tsub	textsubscript
+    Baba tsup	textsuperscript
+    Bab ti	tilde
+    Bab ba	bar
+    Bab do	dot
+
+    Babo pb	parbox
+    Baba rb	raisebox
+
+    " References
+    Bab  eq	eqref{eqn		NONE .
+    Bab  cr	cref			NONE 0 0 {
+    Bab  crr	crefrange{  		NONE .
+    Bab  ci	cite{bbl    		NONE [\ \t{]
+    Bab  ci	cite	    		NONE 0 0 [
+    Bab  cl	citelist{\cite{bbl	NONE .
+
+
+    Bab	del	partial
+    Bab	di	partial_i
+    Bab	dj	partial_j
+    Bab	dk	partial_k
+    Bab	dr	partial_r
+    Bab	ds	partial_s
+    Bab	dt	partial_t
+    Bab	dx	partial_x
+    Bab	dy	partial_y
+    Bab	dz	partial_z
+    Bab	d0	partial_0
+    Bab	d1	partial_1
+    Bab	d2	partial_2
+    Bab	d3	partial_3
+    Bab	d4	partial_4
+    Bab	d5	partial_5
+    Bab	d6	partial_6
+    Bab	d7	partial_7
+    Bab	d8	partial_8
+    Bab	d9	partial_9
+    Bab	dth	partial_\theta
+    Bab cd	cdot
+
+    Bab qu	question
+    Bab pa	part
+
+    Bab	oo	infty
+
+    Bab ha	frac{1}{2}
+    Bab ot	frac{1}{3}
+    Bab of	frac{1}{4}
+    " }}}
+
+    " Environments
+    " {{{
     function! s:new_env( fold, star, ab, envname ) "{{{
 	" No suffix expansions
 	let begin = 'begin{'.a:envname.'}' . ( a:fold == 1 ? '%{{{' : '' )
@@ -149,91 +257,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 	endif
     endfunction
     Bab	en	CloseEnv() NONE [\ \t] 1
-
-    " Misc commands that take an argument.
-    " (Insert trailing { forcibly, and ignore next typed char)
-    "Bab	beg	begin{			NONE [[:space:]{] 
-    Bab	beg	begin{		    	NONE .
-    Bab	sec	section{            	NONE .
-    Bab	ss	subsection{	    	NONE .
-    Bab	sss	subsubsection{      	NONE .
-    Bab	para	paragraph{          	NONE .
-    Bab	sp	subparagraph{       	NONE .
-
-    Bab	tc	textcolor{		NONE .
-    Bab	mb	mathbb
-    Bab	mc	mathcal
-    Bab	ms	mathscr
-    Bab	li	linewidth	    	NONE [\ \t]
-    Bab	inc	includegraphics[width=	NONE [\ \t]
-    Bab	dis	displaystyle
-    Bab tb	textbf{			NONE .
-    Bab em	emph{			NONE .
-    Bab te	text{			NONE .
-    "Bab tit	textit{			NONE .
-    Bab it	item
-
-    Bab	lab	label 	    	    	NONE [\ \t]
-    Bab nn	nonumber
-
-    "AbDef  <buffer> begin{[a-z]\\+\\*\\?}\\\\ la label NONE [\ \t]
-
-    Bab	xr	xrightarrow{   	    	NONE .
-    Bab	xr	xrightarrow   	    	NONE 0 0 [
-    Bab	xl	xleftarrow{    	    	NONE .
-    Bab	xl	xleftarrow    	    	NONE 0 0 [
-    Bab ov	overline{ 		NONE .
-    Bab un	underline{ 		NONE .
-    Bab ul	underline{ 		NONE .
-    Bab fr	frac{			NONE .
-    Bab sq	sqrt			NONE 0 0 [
-    Bab sq	sqrt{			NONE .
-    Bab tsub	textsubscript{		NONE .
-    Bab tsup	textsuperscript{	NONE .
-    Bab ti	tilde
-    Bab ba	bar
-    Bab do	dot
-
-    " References
-    Bab eq	eqref{eqn		NONE .
-    Bab cre	cref{	    		NONE .
-    Bab crr	crefrange{  		NONE .
-    Bab ci	cite{bbl    		NONE .
-    Bab ci	cite	    		NONE 0 0 [
-    Bab cl	citelist{\cite{bbl	NONE .
-
-
-    Bab	del	partial
-    Bab	di	partial_i
-    Bab	dj	partial_j
-    Bab	dk	partial_k
-    Bab	dr	partial_r
-    Bab	ds	partial_s
-    Bab	dt	partial_t
-    Bab	dx	partial_x
-    Bab	dy	partial_y
-    Bab	dz	partial_z
-    Bab	d0	partial_0
-    Bab	d1	partial_1
-    Bab	d2	partial_2
-    Bab	d3	partial_3
-    Bab	d4	partial_4
-    Bab	d5	partial_5
-    Bab	d6	partial_6
-    Bab	d7	partial_7
-    Bab	d8	partial_8
-    Bab	d9	partial_9
-    Bab	dth	partial_\theta
-    Bab cd	cdot
-
-    Bab qu	question
-    Bab pa	part
-
-    Bab	oo	infty
-
-    Bab ha	frac{1}{2}
-    Bab ot	frac{1}{3}
-    Bab of	frac{1}{4}
+    " }}}
 
     if 1 " Greek letters %{{{
 	" Lower case (ordered as in "texdoc symbols")
@@ -283,6 +307,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     endif " }}}
 
     " Abbreviations for spaces (Lp, Rd, etc.)
+    " {{{
     function! s:define_space( abbrv, rep )
 	call AbDefineExpansion( '<buffer>', '\v([^_^]|^)', a:abbrv, a:rep )
 	call AbDefineExpansion( '<buffer>', '[_^]', a:abbrv, '{'.a:rep.'}' )
@@ -320,8 +345,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     AbDef <buffer> . lpp	{\ell^{ }}	[\ \t]
     AbDef <buffer> . rd		{\R^{	}}	[\ \t]
     AbDef <buffer> . rn		{\R^{	}}	[\ \t]
+    " }}}
 
     " Parenthesis and norms. Requires \DeclarePairedDelimiter{\paren}{(}{)}
+    " {{{
     Bab pa	    paren	    NONE [\ \t]
     Bab pab	    paren[\big]{    NONE [{\ \t]
     Bab paB	    paren[\Big]{    NONE [{\ \t]
@@ -337,6 +364,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab no	    norm	    NONE [\ \t]
     Bab nob	    norm[\big]{	    NONE [{\ \t]
     Bab noB	    norm[\Big]{	    NONE [{\ \t]
+    " }}}
 
     " Referencing equations, lemmas etc.
     " {{{
@@ -368,6 +396,30 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Dref ses	sections~\ref{sxn
     Dref fi	figure~\ref{fgr
     " }}}
+
+    " Colors
+    " {{{
+    function! s:new_color( color, sab, ab ) "{{{
+	call AbDefineExpansion( '<buffer>', '\\', 'tc'.a:sab,
+		    \ 'textcolor{'.a:color.'}{', '}', '[ \t{]' )
+	if len( a:sab ) > 1
+	    call AbDefineExpansion( '<buffer>', '\\textcolor{', a:sab,
+			\ a:color.'}{', '}', '[ \t{}]' )
+	endif
+	call AbDefineExpansion( '<buffer>', '\\textcolor{', a:ab,
+		    \ a:color.'}{', '}', '[ \t{}]' )
+    endfunction " }}}
+
+    command! -nargs=+ ColDef :call s:new_color( <f-args> )
+
+    Bab	    tc	textcolor{		NONE [\ t{]
+
+    ColDef  blue    b bl
+    ColDef  red	    r re
+    ColDef  orange  o or
+    ColDef  green   g gr
+    ColDef  black   k bk
+    "}}}
 endif "}}}
 
 " Depreciated constructs
