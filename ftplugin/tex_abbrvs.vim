@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sun 23 Nov 2014 03:12:06 PM EST
+" Last Changed:	Sun 30 Nov 2014 02:27:11 PM EST
 " Version:	0.1
 "
 " Description:
@@ -349,21 +349,21 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
     " Parenthesis and norms. Requires \DeclarePairedDelimiter{\paren}{(}{)}
     " {{{
-    Bab pa	    paren	    NONE [\ \t]
-    Bab pab	    paren[\big]{    NONE [{\ \t]
-    Bab paB	    paren[\Big]{    NONE [{\ \t]
-    Bab se	    set		    NONE [\ \t]
-    Bab seb	    set[\big]{	    NONE [{\ \t]
-    Bab seB	    set[\Big]{	    NONE [{\ \t]
-    Bab br	    brak	    NONE [\ \t]
-    Bab brb	    brak[\big]{	    NONE [{\ \t]
-    Bab brB	    brak[\Big]{	    NONE [{\ \t]
-    Bab ab	    abs		    NONE [\ \t]
-    Bab abb	    abs[\big]{	    NONE [{\ \t]
-    Bab abB	    abs[\Big]{	    NONE [{\ \t]
-    Bab no	    norm	    NONE [\ \t]
-    Bab nob	    norm[\big]{	    NONE [{\ \t]
-    Bab noB	    norm[\Big]{	    NONE [{\ \t]
+    function! s:new_delim( ab, name )
+	call AbDefineExpansion( '<buffer>', '\\', a:ab, a:name.'{', '', '[ \t{]' )
+	call AbDefineExpansion( '<buffer>', '\\', a:ab, a:name.'[\', '', 1, 0, '[' )
+	call AbDefineExpansion( '<buffer>', '\\', a:ab.'b',
+		    \ a:name.'[\big]{', '', '[ \t{]' )
+	call AbDefineExpansion( '<buffer>', '\\', a:ab.'B',
+		    \ a:name.'[\Big]{', '', '[ \t{]' )
+    endfunction
+    command! -nargs=+ Dab	:call s:new_delim( <f-args> )
+	
+    Dab pa	    paren
+    Dab se	    set
+    Dab br	    brak
+    Dab ab	    abs
+    Dab no	    norm
     " }}}
 
     " Referencing equations, lemmas etc.
