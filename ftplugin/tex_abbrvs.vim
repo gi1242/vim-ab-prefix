@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sun 30 Nov 2014 02:27:11 PM EST
+" Last Changed:	Thu 11 Dec 2014 11:53:12 AM CST
 " Version:	0.1
 "
 " Description:
@@ -82,6 +82,19 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Baba ul	underline
     Baba ob	overbrace
     Baba ub	underbrace
+
+    Bab  su	subseteq
+    Bab  sb	subseteq
+    Bab  subs	subseteq
+    Bab  sp	supseteq
+    Bab  sups	supseteq
+    Bab  bcu	bigcup
+    Bab  bcup	bigcup
+    Bab  bca	bigcap
+    Bab  bcap	bigcap
+    Bab  cu	cup
+    Bab  ca	cap
+    Bab  es	emptyset
 
     Baba fr	frac
     Babo sq	sqrt
@@ -401,13 +414,13 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     " {{{
     function! s:new_color( color, sab, ab ) "{{{
 	call AbDefineExpansion( '<buffer>', '\\', 'tc'.a:sab,
-		    \ 'textcolor{'.a:color.'}{', '}', '[ \t{]' )
+		    \ 'textcolor{'.a:color.'}{', '', '[ \t{]' )
 	if len( a:sab ) > 1
 	    call AbDefineExpansion( '<buffer>', '\\textcolor{', a:sab,
-			\ a:color.'}{', '}', '[ \t{}]' )
+			\ a:color.'}{', '', '[ \t{}]' )
 	endif
 	call AbDefineExpansion( '<buffer>', '\\textcolor{', a:ab,
-		    \ a:color.'}{', '}', '[ \t{}]' )
+		    \ a:color.'}{', '', '[ \t{}]' )
     endfunction " }}}
 
     command! -nargs=+ ColDef :call s:new_color( <f-args> )
