@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Thu 11 Dec 2014 11:53:12 AM CST
+" Last Changed:	Thu 18 Dec 2014 01:39:48 PM IST
 " Version:	0.1
 "
 " Description:
@@ -231,16 +231,16 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Cenv	bma	matrix
 
     " Theorems, etc.
-    Cenvfs	bth	theorem
-    Cenvfs	ble     lemma
-    Cenvfs	bprop   proposition
-    Cenvfs	bco     corollary
-    Cenvfs	bconj   conjecture
-    "Cenvf	bqu	question
-    Cenvfs	bde     definition
-    Cenvfs	bre     remark
-    Cenvfs	bex	example
-    Cenvf	bpr     proof
+    Cenvs	bth	theorem
+    Cenvs	ble     lemma
+    Cenvs	bprop   proposition
+    Cenvs	bco     corollary
+    Cenvs	bconj   conjecture
+    "Cenv	bqu	question
+    Cenvs	bde     definition
+    Cenvs	bre     remark
+    Cenvs	bex	example
+    Cenv	bpr     proof
 
     " Misc environments
     Cenv	bdo     document
@@ -251,7 +251,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Cenv	bit     itemize
     Cenv	bcen    compactenum
     Cenv	bcit    compactitem
-    Cenvf	bab     abstract
+    Cenv	bab     abstract
     Cenv	bmp     minipage
     Cenv	bmi     minipage
     Cenv	bquo	quote
