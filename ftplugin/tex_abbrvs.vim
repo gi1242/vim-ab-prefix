@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Thu 18 Dec 2014 01:39:48 PM IST
+" Last Changed:	Tue 23 Dec 2014 01:58:37 PM IST
 " Version:	0.1
 "
 " Description:
@@ -154,7 +154,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     function! s:new_env( fold, star, ab, envname ) "{{{
 	" No suffix expansions
 	let begin = 'begin{'.a:envname.'}' . ( a:fold == 1 ? '%{{{' : '' )
-	let end = '\n\end{'.a:envname.'}'  . ( a:fold == 1 ? '%}}}' : '' )
+	let end = "\n\\end{".a:envname.'}'
+		    \ . ( a:fold == 1 ? '%}}}' : '' )
 	call AbDefineExpansion( '<buffer>', '\\', a:ab,
 		    \ begin, end, "[ \t]" )
 	call AbDefineExpansion( '<buffer>', '\v\\(begin|end)\{', a:ab[1:],
@@ -163,7 +164,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 	" Star version
 	if a:star
 	    let begin = 'begin{'.a:envname.'*}' . ( a:fold == 1 ? '%{{{' : '' )
-	    let end = '\n\end{'.a:envname.'*}'  . ( a:fold == 1 ? '%}}}' : '' )
+	    let end = "\n\\end{".a:envname.'*}'
+			\ . ( a:fold == 1 ? '%}}}' : '' )
 	    call AbDefineExpansion( '<buffer>', '\\', a:ab,
 			\ begin, end, 1, 0, '*' )
 	endif
@@ -171,24 +173,24 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 	" Do the optional argument version
 	let begin = 'begin{'.a:envname.'}'
 	let end = ( a:fold == 1 ? ']%{{{' : ']' )
-	    \ . '\n\end{'.a:envname.'}'
-	    \ . ( (a:fold == 1) ? '%}}}' : '' )
+		    \ . "\n\\end{".a:envname.'}'
+		    \ . ( (a:fold == 1) ? '%}}}' : '' )
 	call AbDefineExpansion( '<buffer>', '\\', a:ab,
 		    \ begin, end, 0, 0, '[' )
 
 	" Do the argument version
 	let begin = 'begin{'.a:envname.'}'
 	let end = ( a:fold == 1 ? '}%{{{' : '}' )
-	    \ . '\n\end{'.a:envname.'}'
-	    \ . ( (a:fold == 1) ? '%}}}' : '' )
+		    \ . "\n\\end{".a:envname.'}'
+		    \ . ( (a:fold == 1) ? '%}}}' : '' )
 	call AbDefineExpansion( '<buffer>', '\\', a:ab,
 		    \ begin, end, 0, 0, '{' )
 	
 	" Do the label version
 	let begin = 'begin{'.a:envname.'}\label{'
 	let end = ( a:fold == 1 ? '}%{{{' : '}' )
-	    \ . '\n\end{'.a:envname.'}'
-	    \ . ( (a:fold == 1) ? '%}}}' : '' )
+		    \ . "\n\\end{".a:envname.'}'
+		    \ . ( (a:fold == 1) ? '%}}}' : '' )
 	call AbDefineExpansion( '<buffer>', '\\', a:ab,
 		    \ begin, end, 1, 0, '\' )
     endfunction"}}}
@@ -261,7 +263,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
     " Automatically close environments
     function! CloseEnv()
-	let [env, fold] = exists( '*TexGetEnvName' ) ? TexGetEnvName() : ['', '']
+	let [env, fold] = exists( '*TexACGetEnvName' ) ? TexACGetEnvName() : ['', '']
 	if env == ''
 	    return 'end{'
 	else
