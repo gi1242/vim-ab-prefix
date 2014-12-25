@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Tue 23 Dec 2014 01:58:37 PM IST
+" Last Changed:	Wed 24 Dec 2014 10:35:34 AM IST
 " Version:	0.1
 "
 " Description:
@@ -111,9 +111,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab  eq	eqref{eqn		NONE .
     Bab  cr	cref			NONE 0 0 {
     Bab  crr	crefrange{  		NONE .
-    Bab  ci	cite{bbl    		NONE [\ \t{]
+    Bab  ci	cite{    		NONE [\ \t{]
     Bab  ci	cite	    		NONE 0 0 [
-    Bab  cl	citelist{\cite{bbl	NONE .
+    Bab  ci	cite*{	    		NONE 1 0 *
+    Bab  cl	citelist{\cite{		NONE .
 
 
     Bab	del	partial
