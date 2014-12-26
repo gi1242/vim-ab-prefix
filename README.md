@@ -31,7 +31,7 @@ If you also have the [tex_autoclose](http://www.vim.org/scripts/script.php?scrip
   Here's what I use in `~/.vim/after/indent/tex.vim`:
 
         setlocal indentexpr=LatexBox_TexIndent()
-        setlocal indentkeys=o,O,=\item,0\\
+        setlocal indentkeys=o,O,=\\item,0\\
 
         setl ai si
 
