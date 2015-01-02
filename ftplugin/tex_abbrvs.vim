@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Wed 24 Dec 2014 10:35:34 AM IST
+" Last Changed:	Fri 02 Jan 2015 11:01:40 AM IST
 " Version:	0.1
 "
 " Description:
@@ -385,7 +385,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     " Referencing equations, lemmas etc.
     " {{{
     function! s:define_reference( ab, rep )
-	call AbDefineExpansion( '<buffer>', '.\?', a:ab, a:rep, '', 1, 0, '~' )
+	call AbDefineExpansion( '<buffer>', '\v\\@<!', a:ab, a:rep, '', 1, 0, '~' )
     endfunction
     command! -nargs=+ Dref :call s:define_reference( <f-args> )
 

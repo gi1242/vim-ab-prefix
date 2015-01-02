@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Mon 03 Nov 2014 09:03:46 PM EST
+" Last Changed:	Fri 02 Jan 2015 10:42:07 AM IST
 " Version:	0.1
 
 " provide load control
@@ -15,7 +15,7 @@ let g:loaded_ab_prefix = 1
 "
 let s:expansions = {}
 
-function! s:prefix_expand( ab )
+function! s:prefix_expand( ab ) "{{{1
     " Grab next char to match suffixes
     let c = nr2char( getchar(0))
 
@@ -80,7 +80,7 @@ function! s:prefix_expand( ab )
     return rep . c
 endfunction
 
-function! AbDefineExpansion( iabargs, prefix, ab, rep, ... )
+function! AbDefineExpansion( iabargs, prefix, ab, rep, ... ) "{{{1
     "echomsg 'iabargs='.a:iabargs 'prefix='.a:prefix 'ab='.a:ab 'rep='.a:rep
 
     let iabargs = (a:iabargs == 'NONE') ? '' : a:iabargs
@@ -116,7 +116,13 @@ function! AbDefineExpansion( iabargs, prefix, ab, rep, ... )
 	    \ "x<left><c-r>=<SID>prefix_expand('".iab_ab."')<cr>"
 endfunction
 
+" {{{1 Debugging stuff
+if exists('g:ab_prefix_debug')
+    function! DumpExpansions()
+	return s:expansions
+    endfunction
+endif
+"}}}1
+
 " Command to define more expansions
 command! -nargs=+ AbDef	:call AbDefineExpansion( <f-args> )
-"command! -nargs=+ Bab	:call AbDefineExpansion( '\\', <f-args>)
-"}}}
