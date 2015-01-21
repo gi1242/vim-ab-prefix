@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 02 Jan 2015 11:01:40 AM IST
+" Last Changed:	Wed 07 Jan 2015 05:59:17 PM IST
 " Version:	0.1
 "
 " Description:
@@ -258,7 +258,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Cenv	bmp     minipage
     Cenv	bmi     minipage
     Cenv	bquo	quote
-    Cenv	bqu	questions
+    Cenv	bque	questions
+    Cenv	bqu	quote
     Cenv	bpa	parts
     Cenv	bfi     figure
 
