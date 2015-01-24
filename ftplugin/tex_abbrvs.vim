@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Wed 21 Jan 2015 05:08:30 PM EST
+" Last Changed:	Fri 23 Jan 2015 07:48:56 PM CST
 " Version:	0.1
 "
 " Description:
@@ -173,7 +173,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
 	" Do the optional argument version
 	let begin = 'begin{'.a:envname.'}'
-	let end = ( a:fold == 1 ? ']%{{{' : ']' )
+	let end = ( a:fold == 1 ? ']%{{{' : '' )
 		    \ . "\n\\end{".a:envname.'}'
 		    \ . ( (a:fold == 1) ? '%}}}' : '' )
 	call AbDefineExpansion( '<buffer>', '\\', a:ab,
@@ -181,7 +181,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
 	" Do the argument version
 	let begin = 'begin{'.a:envname.'}'
-	let end = ( a:fold == 1 ? '}%{{{' : '}' )
+	let end = ( a:fold == 1 ? '}%{{{' : '' )
 		    \ . "\n\\end{".a:envname.'}'
 		    \ . ( (a:fold == 1) ? '%}}}' : '' )
 	call AbDefineExpansion( '<buffer>', '\\', a:ab,
