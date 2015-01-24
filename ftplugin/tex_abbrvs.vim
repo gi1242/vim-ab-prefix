@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Wed 07 Jan 2015 05:59:17 PM IST
+" Last Changed:	Wed 21 Jan 2015 05:08:30 PM EST
 " Version:	0.1
 "
 " Description:
@@ -421,10 +421,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 		    \ 'textcolor{'.a:color.'}{', '', '[ \t{]' )
 	if len( a:sab ) > 1
 	    call AbDefineExpansion( '<buffer>', '\\textcolor{', a:sab,
-			\ a:color.'}{', '', '[ \t{}]' )
+			\ a:color, '', '[ \t]' )
 	endif
 	call AbDefineExpansion( '<buffer>', '\\textcolor{', a:ab,
-		    \ a:color.'}{', '', '[ \t{}]' )
+		    \ a:color, '', '[ \t]' )
     endfunction " }}}
 
     command! -nargs=+ ColDef :call s:new_color( <f-args> )
