@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 23 Jan 2015 07:48:56 PM CST
+" Last Changed:	Wed 04 Feb 2015 11:22:54 AM EST
 " Version:	0.1
 "
 " Description:
@@ -102,7 +102,9 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Baba tsup	textsuperscript
     Bab ti	tilde
     Bab ba	bar
+    Bab ha	hat
     Bab do	dot
+    Bab dd	ddot
 
     Babo pb	parbox
     Baba rb	raisebox
@@ -145,9 +147,10 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
 
     Bab	oo	infty
 
-    Bab ha	frac{1}{2}
-    Bab ot	frac{1}{3}
-    Bab of	frac{1}{4}
+    Bab 12	frac{1}{2}
+    Bab 13	frac{1}{3}
+    Bab 14	frac{1}{4}
+    Bab fr1	frac{1}{    		NONE [\ \t{]
     " }}}
 
     " Environments
@@ -276,51 +279,86 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab	en	CloseEnv() NONE [\ \t] 1
     " }}}
 
+    function! s:greek( ab, exp )
+	if a:ab != a:exp
+	    call AbDefineExpansion( '<buffer>', '\\',
+			\ a:ab, a:exp )
+	endif
+
+	" Suffixes
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ a:ab.'t', 'tilde \'.a:exp )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ a:ab.'h', 'hat \'.a:exp )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ a:ab.'b', 'bar \'.a:exp )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ a:ab.'d', 'dot \'.a:exp )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ a:ab.'dd', 'ddot \'.a:exp )
+
+	" Prefixes.
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ 'ti'.a:ab, 'tilde \'.a:exp )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ 'ha'.a:ab, 'hat \'.a:exp )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ 'ba'.a:ab, 'bar \'.a:exp )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ 'do'.a:ab, 'dot \'.a:exp )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ 'dd'.a:ab, 'ddot \'.a:exp )
+
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ 'd'.a:ab, ', d\'.a:exp )
+    endfunction
+    command! -nargs=+ Gab	:call s:greek( <f-args> )
+
     if 1 " Greek letters %{{{
 	" Lower case (ordered as in "texdoc symbols")
-	Bab al	alpha
-	Bab be	beta
-	Bab ga	gamma
-	Bab de	delta
-	Bab ep	epsilon
-	Bab ve	varepsilon
-	Bab ze	zeta
-	Bab et	eta
-	Bab th	theta
-	Bab vt	vartheta
-	Bab io	iota
-	Bab ka	kappa
-	Bab la	lambda
-	"Bab mu	mu
-	"Bab nu	nu
-	"Bab xi	xi
-	"ab  o  o
-	"Bab pi	pi
-	Bab vpi	varpi
-	Bab rh	rho
-	Bab vr	varrho
-	Bab si	sigma
-	Bab vs	varsigma
-	Bab ta	tau
-	Bab up	upsilon
-	Bab ph	phi
-	Bab vp	varphi
-	Bab ch	chi
-	Bab ps	psi
-	Bab om	omega
+	Gab al	alpha
+	Gab be	beta
+	Gab ga	gamma
+	Gab de	delta
+	Gab ep	epsilon
+	Gab ve	varepsilon
+	Gab ze	zeta
+	Gab et	eta
+	Gab th	theta
+	Gab vt	vartheta
+	Gab io	iota
+	Gab ka	kappa
+	Gab la	lambda
+	Gab mu	mu
+	Gab nu	nu
+	Gab xi	xi
+	"Gab o   o
+	Gab pi	pi
+	Gab vpi	varpi
+	Gab rh	rho
+	Gab vr	varrho
+	Gab si	sigma
+	Gab vs	varsigma
+	Gab ta	tau
+	Gab up	upsilon
+	Gab ph	phi
+	Gab vp	varphi
+	Gab ch	chi
+	Gab ps	psi
+	Gab om	omega
 
 	" Upper case
-	Bab Ga	Gamma
-	Bab De	Delta
-	Bab Th	Theta
-	Bab La	Lambda
-	"Bab Xi	Xi
-	"Bab Pi	Pi
-	Bab Si	Sigma
-	Bab Up	Upsilon
-	Bab Ph	Phi
-	Bab Ps	Psi
-	Bab Om	Omega
+	Gab Ga	Gamma
+	Gab De	Delta
+	Gab Th	Theta
+	Gab La	Lambda
+	Gab Xi	Xi
+	Gab Pi	Pi
+	Gab Si	Sigma
+	Gab Up	Upsilon
+	Gab Ph	Phi
+	Gab Ps	Psi
+	Gab Om	Omega
     endif " }}}
 
     " Abbreviations for spaces (Lp, Rd, etc.)
