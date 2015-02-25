@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 06 Feb 2015 02:20:33 PM EST
+" Last Changed:	Wed 18 Feb 2015 02:13:06 PM EST
 " Version:	0.1
 "
 " Description:
@@ -83,7 +83,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Baba ob	overbrace
     Baba ub	underbrace
 
-    Bab  su	subseteq
+    Bab  su	sum
+    Bab  pr	prod
     Bab  sb	subseteq
     Bab  subs	subseteq
     Bab  sp	supseteq
@@ -100,6 +101,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Babo sq	sqrt
     Baba tsub	textsubscript
     Baba tsup	textsuperscript
+
     Bab ti	tilde
     Bab ba	bar
     Bab ha	hat
@@ -146,11 +148,26 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Bab pa	part
 
     Bab	oo	infty
+    Bab st	star
 
-    Bab 12	frac{1}{2}
-    Bab 13	frac{1}{3}
-    Bab 14	frac{1}{4}
+    Bab fr12	frac{1}{2}
+    Bab fr13	frac{1}{3}
+    Bab fr14	frac{1}{4}
+    Bab fr15	frac{1}{5}
+    Bab fr16	frac{1}{6}
+    Bab fr17	frac{1}{7}
+    Bab fr18	frac{1}{8}
+    Bab fr19	frac{1}{9}
+
     Bab fr1	frac{1}{    		NONE [\ \t{]
+    Bab fr2	frac{2}{    		NONE [\ \t{]
+    Bab fr3	frac{3}{    		NONE [\ \t{]
+    Bab fr4	frac{4}{    		NONE [\ \t{]
+    Bab fr5	frac{5}{    		NONE [\ \t{]
+    Bab fr6	frac{6}{    		NONE [\ \t{]
+    Bab fr7	frac{7}{    		NONE [\ \t{]
+    Bab fr8	frac{8}{    		NONE [\ \t{]
+    Bab fr9	frac{9}{    		NONE [\ \t{]
     " }}}
 
     " Environments
@@ -418,6 +435,7 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Dab pa	    paren
     Dab se	    set
     Dab br	    brak
+    Dab fl	    floor
     Dab ab	    abs
     Dab no	    norm
     " }}}
@@ -437,6 +455,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     Dref Le	Lemma~\ref{lma
     Dref les    lemmas~\ref{lma
     Dref Les    Lemmas~\ref{lma
+    Dref Co	Corollary~\ref{cly
+    Dref co	corollary~\ref{cly
     Dref pr	proposition~\ref{ppn
     Dref Pr	Proposition~\ref{ppn
     Dref eq	equation~\eqref{eqn
