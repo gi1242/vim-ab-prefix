@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Wed 18 Feb 2015 02:13:06 PM EST
+" Last Changed:	Sun 01 Mar 2015 12:20:29 PM EST
 " Version:	0.1
 "
 " Description:
@@ -30,14 +30,21 @@ iab <buffer> cadlag	c\`adl\`ag
 if exists( 'g:loaded_ab_prefix' ) "{{{
     " Commands
     " {{{
+    " Usage: Bab ab rep rrep gobble eval suffix
     command! -nargs=+ Bab	:AbDef  <buffer> \\\\ <args>
     
     " Commands with arguments
     function! s:new_command( ab, cmd, opt )
-	call AbDefineExpansion( '<buffer>', '\\', a:ab, a:cmd.'{', '', '[ \t{]' )
+	call AbDefineExpansion( '<buffer>', '\\',
+		    \ a:ab, a:cmd.'{', '', '[ \t{]' )
 	if a:opt
-	    call AbDefineExpansion( '<buffer>', '\\', a:ab, a:cmd, '', 0, 0, '[' )
+	    call AbDefineExpansion( '<buffer>', '\\',
+		    \ a:ab, a:cmd, '', 0, 0, '[' )
 	endif
+	
+	" Star form
+	call AbDefineExpansion( '<buffer>', '\\',
+		\ a:ab, a:cmd.(a:opt ? '' : '{'), '', 0, 0, '*' )
     endfunction
 
     command! -nargs=+ Baba	:call s:new_command( <f-args>, 0 )
@@ -114,10 +121,8 @@ if exists( 'g:loaded_ab_prefix' ) "{{{
     " References
     Bab  eq	eqref{eqn		NONE .
     Bab  cr	cref			NONE 0 0 {
-    Bab  crr	crefrange{  		NONE .
-    Bab  ci	cite{    		NONE [\ \t{]
-    Bab  ci	cite	    		NONE 0 0 [
-    Bab  ci	cite*{	    		NONE 1 0 *
+    Baba crr	crefrange
+    Babo ci	cite
     Bab  cl	citelist{\cite{		NONE .
 
 
