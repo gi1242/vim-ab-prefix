@@ -1,30 +1,11 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sun 01 Mar 2015 12:20:29 PM EST
+" Last Changed:	Sun 08 Mar 2015 02:26:26 PM EDT
 " Version:	0.1
 "
 " Description:
 "   Various TeX abbreviations and mappings in insert mode.
-
-"
-" Non math mode, standard abbreviations.
-"
-iab <buffer> Calderon	Calder\'on
-iab <buffer> Cordoba	C\'ordoba
-iab <buffer> Cesaro	Ces\`aro
-iab <buffer> Fejer	Fej\'er
-iab <buffer> Holder	H\<c-v>"older
-iab <buffer> Hormander	H\<c-v>"ormander
-iab <buffer> Ito	It\^o
-iab <buffer> Jenee	Jen\'ee
-iab <buffer> Levy	L\'evy
-iab <buffer> Poincare	Poincar\'e
-iab <buffer> Peclet	P\'eclet
-iab <buffer> Rozovskii	Rozovski{\u\i}
-iab <buffer> Szego	Szeg\<c-v>"o
-iab <buffer> Sverak	\v Sver\'ak
-iab <buffer> cadlag	c\`adl\`ag
 
 " Conditional abbreviations
 if exists( 'g:loaded_ab_prefix' ) "{{{
