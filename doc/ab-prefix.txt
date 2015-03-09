@@ -79,13 +79,35 @@ Greek letters:~
 	\vs	    	\varsigma
 	\vp	    	\varphi
 
+    Dot/Tilde/Bar prefixes and suffixes:~
+
+    All Greek letters can be prefixed or suffixed to obtain a \tilde, \bar,
+    etc. version. Typing "\tal" results in "\tilde \alpha". Heres a list of
+    prefixes and suffixes.
+
+	Text		Replacement~
+	\alt		\tilde \alpha
+	\alh		\hat \alpha
+	\alb		\bar \alpha
+	\ald		\dot \alpha
+	\aldd		\ddot \alpha
+	
+	\tial		\tilde \alpha
+	\haal		\hat \alpha
+	\baal		\bar \alpha
+	\doal		\dot \alpha
+	\ddal		\ddot \alpha
+
+	\dal		\, d\alpha
+
+    Of course, replacing "al" with "be" gets the above for beta, etc.
+
 									 *Bab*
 
     To easily define your own "\" commands, use the Bab commands. This is
     equivalent to >
 
 	AbDef  <buffer> \\\\ <args>
-
 
 Environments:~
 
@@ -110,23 +132,65 @@ Environments:~
 	\beq{		\begin{equation}{X}
 			\end{equation}
 
-    Some environments are pre-defined with fold markers (theorems, lemmas).
-    The analogue of the above with fold markers is as follows:
+    Here is a list of pre-defined environments. Most of them are obtained
+    using a "\b" followed by the first two letters of the environment name.
 
-	\bth<space>	\begin{theorem}%{{{X
-			\end{theorem}%}}}
+	Abbreviation	Environment name ~
 
-	\bth*		\begin{theorem*}%{{{X
-			\end{theorem*}%}}}
+	\beq		equation
+	\bal		align
+	\bali		align
+	\bga		gather
+	\bfl		flalign
+	\bml		multline
+	\bmu		multline
+	\bala		alignat
+	\balat		alignat
 
-	\bth\		\begin{theorem}\label{X}%{{{
-			\end{theorem}%}}}
+	\bsp		split
+	\bald		aligned
+	\bgad		gathered
+	\bca		cases
+	\bdc		dcases
+	\bdca		dcases
+	\bmld		multlined
+	\bmud		multlined
 
-	\bth[		\begin{theorem}[X]%{{{
-			\end{theorem}%}}}
+	\bpm		pmatrix
+	\bma		matrix
 
-	\bth{		\begin{theorem}{X}%{{{
-			\end{theorem}%}}}
+	\bth		theorem
+	\ble		lemma
+	\bpp		proposition
+	\bco		corollary
+	\bconj		conjecture
+	\bcj		conjecture
+	\bde		definition
+	\bre		remark
+	\bex		example
+	\bpr		proof
+
+	\bdo		document
+	\bce		center
+	\brl		raggedleft
+	\brr		raggedright
+	\ben		enumerate
+	\bit		itemize
+	\bcen		compactenum
+	\bcit		compactitem
+	\bab		abstract
+	\bmp		minipage
+	\bmi		minipage
+	\bquo		quote
+	\bque		questions
+	\bqu		quote
+	\bpa		parts
+	\bfi		figure
+
+    It's also possible that the code was updated and not the documentation,
+    so check the code for the definitive list...
+
+    Environments without a close tag:~
 
     If you don't want the end tag inserted automatically, you can do it in
     stages. The first two letters of the environment name after "\begin{" or
@@ -142,19 +206,20 @@ Environments:~
     automatically closes the last open environment.
 
     NOTE: The construct "$$" has been depreciated in LaTeX for a while now. So
-    this plugin automatically replaces a "$$" outside math environments with
-    "\begin{equation*}" and with "\end{equation*}" inside math environments.
+    this plugin automatically replaces a "$$" with the equation* environment.
 
 
 					       *Cenv* *Cenvf* *Cenvs* *Cenvfs*
+
     To create your own environments use the one of the |Cenv| commands. >
 
 	Cenv {ab} {envname}
 <
-    To also set up a starred version use the |Cenvs| version, for fold markers
-    use |Cenvf|, and for both use |Cenvfs|.
+    To also set up a starred version use the |Cenvs| version. For the
+    environment with fold markers automatically added, use use |Cenvf|.
+    For both fold markers and the starred version use |Cenvfs|.
 
-Spaces:~
+Standard spaces (like R^d, L^p, etc.):~
 
     Typing "R2" produces "R^2", unless preceded by an "^" or "_" in which case
     it produces "{R^2}". This also works for various spaces (Rd, Lp, etc.).
@@ -165,24 +230,69 @@ Spaces:~
     to produce >
 
 	\int_{\R^2} \abs{f}^2 \, d\lambda < \infty \text{for all $f \in L^2$.}
+<
+    A list of spaces which are known are as follows:
 
-Commands:~
+	Abbreviation	Corresponding space:~
 
-    Many commands can be expanded with "\" and the first two letters. Some are
-    time saving shorthands (e.g. \dx produces \partial_x). For a complete
-    list, "Use the source, Luke".
+	Lp		L^p
+	Lq		L^q
+	Lr		L^r
+	L1		L^1
+	L2		L^2
+	Loo		L^\infty
 
-References:~
+	lp		\ell^p
+	lq		\ell^q
+	lr		\ell^r
+	l1		\ell^1
+	l2		\ell^2
+	loo		\ell^\infty
 
-    Typing the first two letters of the object (theorem, lemma etc.) followed
-    by a "~" expands to what's used to reference them. For instance, typing
-    "eq~" produces "equation~\eqref{eqn".
+	Rd		\R^d
+	Rn		\R^n
+	R2		\R^2
+	R3		\R^3
+	R4		\R^4
 
-    For plurals, include an "s" before the "~". E.g. typing "ths~" produces
-    "theorems~\ref{thm"
+	Hs		H^s
+	H1		H^1
+	H2		H^2
+	Hm1		H^{-1}
 
+    Following the abbreviation with a "(" will not produce the closing "}" (if
+    any), which is usually what I want. Also, if some of these spaces are
+    followed with a "{" then they don't produce an exponent. That is, typing
+    "_Rd{" produces "_{\R^{", which is usually what I want.
+
+									 *Sab*
+
+    To define your own space, use the |Sab| command. The abbreviation for Rd
+    above was produced by >
+
+	Sab Rd \R^d \R^
+
+Other commands:~
+
+    Many commands can be expanded with "\" and the first two letters. Many
+    time saving shorthands are defined. There are also predefined shortcuts
+    for colors, references and parenthesis. A few are listed below:
+
+	Text	    Replacement~
+
+	\te	    \text{
+	\tcr	    \textcolor{red}{
+
+	eq~	    equation~\eqref{eqn
+	Le~	    Lemma~\ref{lma
+	Ths~	    Theorems~\ref{thm
+
+	\pa	    \paren{
+	\pab	    \paren[\big]{
+
+    For a complete list, "Use the source, Luke".
 
 >
  Maintainer : GI <gi1242@nospam.com> (replace nospam with gmail)
- Modified   : Thu 13 Nov 2014 02:08:37 PM EST
+ Modified   : Sun 08 Mar 2015 09:35:12 PM EDT
  vim: ft=help:tw=78:iskeyword=!-~,^*,^|,^":ai:
