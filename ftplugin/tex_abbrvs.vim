@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sun 08 Mar 2015 09:22:37 PM EDT
+" Last Changed:	Mon 06 Apr 2015 04:40:52 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -444,30 +444,33 @@ function! s:define_reference( ab, rep )
 endfunction
 command! -nargs=+ Dref :call s:define_reference( <f-args> )
 
-Dref th	theorem~\ref{thm
-Dref Th	Theorem~\ref{thm
+Dref th	    theorem~\ref{thm
+Dref Th	    Theorem~\ref{thm
 Dref ths    theorems~\ref{thm
 Dref Ths    Theorems~\ref{thm
-Dref le	lemma~\ref{lma
-Dref Le	Lemma~\ref{lma
+Dref le	    lemma~\ref{lma
+Dref Le	    Lemma~\ref{lma
 Dref les    lemmas~\ref{lma
 Dref Les    Lemmas~\ref{lma
-Dref Co	Corollary~\ref{cly
-Dref co	corollary~\ref{cly
-Dref pr	proposition~\ref{ppn
-Dref Pr	Proposition~\ref{ppn
-Dref eq	equation~\eqref{eqn
-Dref Eq	Equation~\eqref{eqn
+Dref co	    corollary~\ref{cly
+Dref Co	    Corollary~\ref{cly
+Dref pr	    proposition~\ref{ppn
+Dref Pr	    Proposition~\ref{ppn
+Dref eq	    equation~\eqref{eqn
+Dref Eq	    Equation~\eqref{eqn
 Dref eqs    equations~\eqref{eqn
 Dref Eqs    Equations~\eqref{eqn
 Dref ieq    inequality~\eqref{eqn
-Dref Ieq	Inequality~\eqref{eqn
-Dref ieqs  	inequalities~\eqref{eqn
-Dref ieqs  	inequalities~\eqref{eqn
+Dref Ieq    Inequality~\eqref{eqn
+Dref ieqs   inequalities~\eqref{eqn
+Dref Ieqs   Inequalities~\eqref{eqn
 Dref sy     system~\eqref{eqn
-Dref se	section~\ref{sxn
-Dref ses	sections~\ref{sxn
-Dref fi	figure~\ref{fgr
+Dref se	    section~\ref{sxn
+Dref Se	    Section~\ref{sxn
+Dref ses    sections~\ref{sxn
+Dref Ses    Sections~\ref{sxn
+Dref fi	    figure~\ref{fgr
+Dref Fi	    Figure~\ref{fgr
 " }}}
 
 " Colors
