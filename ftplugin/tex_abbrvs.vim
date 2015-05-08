@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Mon 06 Apr 2015 04:40:52 PM EDT
+" Last Changed:	Thu 07 May 2015 11:03:40 AM EDT
 " Version:	0.1
 "
 " Description:
@@ -56,6 +56,7 @@ Bab  dis	displaystyle
 Baba tb	textbf
 Baba em	emph
 Baba te	text
+Baba tt	texttt
 "Baba tit	textit
 Bab  it	item
 
