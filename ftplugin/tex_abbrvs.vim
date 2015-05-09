@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sun 08 Mar 2015 09:22:37 PM EDT
+" Last Changed:	Sat 09 May 2015 06:58:38 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -445,7 +445,6 @@ function! s:define_reference( ab, rep )
 endfunction
 command! -nargs=+ Dref :call s:define_reference( <f-args> )
 
-<<<<<<< HEAD
 Dref th	    theorem~\ref{thm
 Dref Th	    Theorem~\ref{thm
 Dref ths    theorems~\ref{thm
