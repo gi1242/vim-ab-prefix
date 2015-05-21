@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sat 09 May 2015 06:58:38 PM EDT
+" Last Changed:	Thu 21 May 2015 07:54:25 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -132,13 +132,20 @@ Bab	d7	partial_7
 Bab	d8	partial_8
 Bab	d9	partial_9
 Bab	dth	partial_\theta
-Bab cd	cdot
+
+Bab intr    int_\R
+Bab intr    int_{\R  NONE 0 0 ^
+Bab intr2   int_{\R^2}
+Bab intr3   int_{\R^3}
+Bab intrd   int_{\R^d}
+Bab intrn   int_{\R^n}
 
 Bab qu	question
 Bab pa	part
 
 Bab	oo	infty
 Bab st	star
+Bab cd	cdot
 
 Bab fr12	frac{1}{2}
 Bab fr13	frac{1}{3}
