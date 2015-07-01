@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Tue 26 May 2015 07:48:54 AM EDT
+" Last Changed:	Tue 23 Jun 2015 04:38:17 PM CDT
 " Version:	0.1
 "
 " Description:
@@ -75,22 +75,22 @@ Baba ul	underline
 Baba ob	overbrace
 Baba ub	underbrace
 
-Bab  su	sum
-Bab  pr	prod
-Bab  sb	subseteq
+Bab  su		sum
+Bab  pr		prod
+Bab  sb		subseteq
 Bab  subs	subseteq
-Bab  sp	supseteq
+Bab  sp		supseteq
 Bab  sups	supseteq
 Bab  bcu	bigcup
 Bab  bcup	bigcup
 Bab  bca	bigcap
 Bab  bcap	bigcap
-Bab  cu	cup
-Bab  ca	cap
-Bab  es	emptyset
+Bab  cu		cup
+Bab  ca		cap
+Bab  es		emptyset
 
-Baba fr	frac
-Babo sq	sqrt
+Baba fr		frac
+Babo sq		sqrt
 Baba tsub	textsubscript
 Baba tsup	textsuperscript
 
@@ -463,9 +463,17 @@ Dref Le	    Lemma~\ref{lma
 Dref les    lemmas~\ref{lma
 Dref Les    Lemmas~\ref{lma
 Dref co	    corollary~\ref{cly
+Dref cos    corollaries~\ref{cly
 Dref Co	    Corollary~\ref{cly
+Dref Cos    Corollaries~\ref{cly
 Dref pr	    proposition~\ref{ppn
+Dref prs    propositions~\ref{ppn
 Dref Pr	    Proposition~\ref{ppn
+Dref Prs    Propositions~\ref{ppn
+Dref de	    definition~\ref{ppn
+Dref des    definitions~\ref{ppn
+Dref De	    Definition~\ref{ppn
+Dref Des    Definitions~\ref{ppn
 Dref eq	    equation~\eqref{eqn
 Dref Eq	    Equation~\eqref{eqn
 Dref eqs    equations~\eqref{eqn
@@ -479,8 +487,14 @@ Dref se	    section~\ref{sxn
 Dref Se	    Section~\ref{sxn
 Dref ses    sections~\ref{sxn
 Dref Ses    Sections~\ref{sxn
+Dref ap	    appendix~\ref{sxn
+Dref aps    appendices~\ref{sxn
+Dref Ap	    Appendix~\ref{sxn
+Dref Aps    Appendices~\ref{sxn
 Dref fi	    figure~\ref{fgr
+Dref fis    figures~\ref{fgr
 Dref Fi	    Figure~\ref{fgr
+Dref Fis    Figures~\ref{fgr
 " }}}
 
 " Colors
