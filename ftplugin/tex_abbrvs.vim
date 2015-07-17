@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Tue 23 Jun 2015 04:38:17 PM CDT
+" Last Changed:	Fri 17 Jul 2015 03:48:04 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -111,27 +111,32 @@ Babo ci	cite
 Bab  cl	citelist{\cite{		NONE .
 
 
-Bab	del	partial
-Bab	di	partial_i
-Bab	dj	partial_j
-Bab	dk	partial_k
-Bab	dr	partial_r
-Bab	ds	partial_s
-Bab	dt	partial_t
-Bab	dx	partial_x
-Bab	dy	partial_y
-Bab	dz	partial_z
-Bab	d0	partial_0
-Bab	d1	partial_1
-Bab	d2	partial_2
-Bab	d3	partial_3
-Bab	d4	partial_4
-Bab	d5	partial_5
-Bab	d6	partial_6
-Bab	d7	partial_7
-Bab	d8	partial_8
-Bab	d9	partial_9
-Bab	dth	partial_\theta
+" Bab	par	partial
+Bab pa	partial NONE 0 0 _
+Bab pa	partial NONE 0 0 ^
+Bab pa	partial NONE 0 0 \ 
+Bab pa	partial NONE 0 0 \\
+
+Bab	pai	partial_i
+Bab	pj	partial_j
+Bab	pk	partial_k
+Bab	pr	partial_r
+Bab	pah	partial_h
+Bab	ps	partial_s
+Bab	pt	partial_t
+Bab	px	partial_x
+Bab	py	partial_y
+Bab	pz	partial_z
+Bab	p0	partial_0
+Bab	p1	partial_1
+Bab	p2	partial_2
+Bab	p3	partial_3
+Bab	p4	partial_4
+Bab	p5	partial_5
+Bab	p6	partial_6
+Bab	p7	partial_7
+Bab	p8	partial_8
+Bab	p9	partial_9
 
 Bab intr    int_\R
 Bab intr2   int_{\R^2}
@@ -141,6 +146,10 @@ Bab intrn   int_{\R^n}
 Bab intrp   int_{\R^+}
 Bab intzi   int_0^\infty
 Bab intr    int_{\R	    NONE 0 0 ^
+Bab int0    int_0
+Bab int0t   int_0^t
+Bab int0T   int_0^T
+"Bab int	    int_{	    NONE 0 0 -
 
 Bab qu	question
 Bab pa	part
@@ -330,6 +339,8 @@ function! s:greek( ab, exp )
 
     call AbDefineExpansion( '<buffer>', '\\',
 		\ 'd'.a:ab, ', d\'.a:exp )
+    call AbDefineExpansion( '<buffer>', '\\',
+		\ 'p'.a:ab, 'partial_\'.a:exp )
 endfunction
 command! -nargs=+ Gab	:call s:greek( <f-args> )
 
