@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 17 Jul 2015 03:48:04 PM EDT
+" Last Changed:	Mon 27 Jul 2015 01:18:48 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -138,17 +138,17 @@ Bab	p7	partial_7
 Bab	p8	partial_8
 Bab	p9	partial_9
 
-Bab intr    int_\R
-Bab intr2   int_{\R^2}
-Bab intr3   int_{\R^3}
-Bab intrd   int_{\R^d}
-Bab intrn   int_{\R^n}
-Bab intrp   int_{\R^+}
-Bab intzi   int_0^\infty
-Bab intr    int_{\R	    NONE 0 0 ^
-Bab int0    int_0
-Bab int0t   int_0^t
-Bab int0T   int_0^T
+Bab ir    int_\R
+Bab ir2   int_{\R^2}
+Bab ir3   int_{\R^3}
+Bab ird   int_{\R^d}
+Bab irn   int_{\R^n}
+Bab irp   int_{\R^+}
+Bab ir    int_{\R	    NONE 0 0 ^
+Bab iz    int_0
+Bab izt   int_0^t
+Bab izT   int_0^T
+Bab izi   int_0^\infty
 "Bab int	    int_{	    NONE 0 0 -
 
 Bab qu	question
