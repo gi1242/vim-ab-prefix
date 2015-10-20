@@ -1,14 +1,13 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 02 Jan 2015 10:42:07 AM IST
+" Last Changed:	Thu 15 Oct 2015 04:55:37 PM EDT
 " Version:	0.1
 
 " provide load control
 if exists('g:loaded_ab_prefix')
     finish
 endif
-let g:loaded_ab_prefix = 1
 
 " NOTE: This doesn't seem to work for one letter macros. Directly use iab
 " for those.
@@ -97,23 +96,35 @@ function! AbDefineExpansion( iabargs, prefix, ab, rep, ... ) "{{{1
 
     if suffix == '' | let suffix = 'NONE' | endif
 
-    if !has_key( s:expansions, a:ab )
-	let s:expansions[a:ab] = {}
-    endif
-    if !has_key( s:expansions[a:ab], a:prefix )
-	let s:expansions[a:ab][a:prefix] = {}
-    endif
+    if rep == '' && rrep == ''
+	" Delete the expansion instead
+	if has_key( s:expansions, a:ab ) 
+		    \ && has_key( s:expansions[a:ab], a:prefix )
+	    unlet s:expansions[a:ab][a:prefix]
+	    if empty( s:expansions[a:ab] )
+		unlet s:expansions[a:ab]
+		exec 'iunab' iabargs a:ab 
+	    endif
+	endif
+    else
+	if !has_key( s:expansions, a:ab )
+	    let s:expansions[a:ab] = {}
+	endif
+	if !has_key( s:expansions[a:ab], a:prefix )
+	    let s:expansions[a:ab][a:prefix] = {}
+	endif
 
-    let s:expansions[a:ab][a:prefix][suffix] =
-	    \ { 
-		\ 'rep': rep,
-		\ 'rrep': substitute( rrep, '\\n', '\r', 'g' ),
-		\ 'gobble': gobble,
-		\ 'eval': eval
-	    \ }
-    let iab_ab = substitute( a:ab, '|', '\\|', 'g' )
-    exec 'iab' iabargs a:ab 
-	    \ "x<left><c-r>=<SID>prefix_expand('".iab_ab."')<cr>"
+	let s:expansions[a:ab][a:prefix][suffix] =
+		\ { 
+		    \ 'rep': rep,
+		    \ 'rrep': substitute( rrep, '\\n', '\r', 'g' ),
+		    \ 'gobble': gobble,
+		    \ 'eval': eval
+		\ }
+	let iab_ab = substitute( a:ab, '|', '\\|', 'g' )
+	exec 'iab' iabargs a:ab 
+		\ "x<left><c-r>=<SID>prefix_expand('".iab_ab."')<cr>"
+    endif
 endfunction
 
 " {{{1 Debugging stuff
@@ -126,3 +137,5 @@ endif
 
 " Command to define more expansions
 command! -nargs=+ AbDef	:call AbDefineExpansion( <f-args> )
+
+let g:loaded_ab_prefix = 1
