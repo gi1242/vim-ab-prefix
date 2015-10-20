@@ -1,14 +1,14 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Mon 27 Jul 2015 01:18:48 PM EDT
+" Last Changed:	Thu 15 Oct 2015 04:55:37 PM EDT
 " Version:	0.1
 "
 " Description:
 "   Various TeX abbreviations and mappings in insert mode.
 
 " Don't do anything if the ab-prefix plugin hasn't been loaded.
-if !exists( 'g:loaded_ab_prefix' )
+if !exists( 'g:loaded_ab_prefix' ) || exists( 'b:loaded_tex_ab_prefix' )
     finish
 endif
     
@@ -389,6 +389,10 @@ Gab Ph	Phi
 Gab Ps	Psi
 Gab Om	Omega
 
+" Clear out common conflicts
+Bab psi NONE
+Bab det NONE
+
 " }}}
 
 " Abbreviations for spaces (Lp, Rd, etc.)
@@ -426,6 +430,7 @@ Sab loo	\ell^\infty
 
 " Requires \newcommand{\R}{\mathbb{R}}
 Sab Rd	\R^d \R^
+Sab Rm	\R^m \R^
 Sab Rn	\R^n \R^
 Sab R2	\R^2
 Sab R3	\R^3
@@ -587,3 +592,5 @@ if 0 "{{{
     "inoremap <buffer> "p	\pi
     "inoremap <buffer> "t	\tau
 endif "}}}
+
+let b:loaded_tex_ab_prefix = 1
