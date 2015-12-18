@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Thu 15 Oct 2015 04:55:37 PM EDT
+" Last Changed:	Fri 06 Nov 2015 09:19:48 PM EST
 " Version:	0.1
 "
 " Description:
@@ -145,7 +145,7 @@ Bab ird   int_{\R^d}
 Bab irn   int_{\R^n}
 Bab irp   int_{\R^+}
 Bab ir    int_{\R	    NONE 0 0 ^
-Bab iz    int_0
+Bab iz    int_0^	    NONE [\ \t^]
 Bab izt   int_0^t
 Bab izT   int_0^T
 Bab izi   int_0^\infty
