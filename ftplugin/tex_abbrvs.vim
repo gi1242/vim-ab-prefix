@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Thu 17 Dec 2015 09:24:03 PM EST
+" Last Changed:	Thu 17 Dec 2015 10:02:13 PM EST
 " Version:	0.1
 "
 " Description:
