@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sun 03 Jan 2016 04:47:39 PM EST
+" Last Changed:	Thu 10 Mar 2016 01:59:25 PM GMT
 " Version:	0.1
 "
 " Description:
@@ -71,6 +71,7 @@ Babo xr	xrightarrow
 Babo xl	xleftarrow
 
 Baba ov	overline
+Baba ol	overline
 Baba un	underline
 Baba ul	underline
 Baba ob	overbrace
@@ -96,6 +97,7 @@ Baba tsub	textsubscript
 Baba tsup	textsuperscript
 
 Bab ti	tilde
+Baba wt	widetilde
 Bab ba	bar
 Bab ha	hat
 Bab do	dot
