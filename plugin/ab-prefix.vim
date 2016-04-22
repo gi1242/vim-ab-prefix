@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Thu 15 Oct 2015 04:55:37 PM EDT
+" Last Changed:	Thu 21 Apr 2016 01:32:37 PM PDT
 " Version:	0.1
 
 " provide load control
@@ -79,17 +79,18 @@ function! s:prefix_expand( ab ) "{{{1
     return rep . c
 endfunction
 
-function! AbDefineExpansion( iabargs, prefix, ab, rep, ... ) "{{{1
-    "echomsg 'iabargs='.a:iabargs 'prefix='.a:prefix 'ab='.a:ab 'rep='.a:rep
+function! AbDefineExpansion( iabargs, prefix, ab, ... ) "{{{1
+    "echomsg 'iabargs='.a:iabargs 'prefix='.a:prefix 'ab='.a:ab
 
     let iabargs = (a:iabargs == 'NONE') ? '' : a:iabargs
-    let rep = (a:rep == 'NONE') ? '' : a:rep
 
-    let rrep	= (a:0 >= 1) ? a:1 : ''
-    let gobble	= (a:0 >= 2) ? a:2 : ''
-    let eval	= (a:0 >= 3) ? a:3 : 0
-    let suffix	= (a:0 >= 4) ? a:4 : ''
+    let rep	= (a:0 >= 1) ? a:1 : ''
+    let rrep	= (a:0 >= 2) ? a:2 : ''
+    let gobble	= (a:0 >= 3) ? a:3 : ''
+    let eval	= (a:0 >= 4) ? a:4 : 0
+    let suffix	= (a:0 >= 5) ? a:5 : ''
 
+    if rep	== 'NONE' | let rep	= '' | endif
     if rrep	== 'NONE' | let rrep	= '' | endif
     if gobble	== 'NONE' | let gobble	= '' | endif
     if eval	== 'NONE' | let eval	= 0  | endif
