@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Thu 10 Mar 2016 01:59:25 PM GMT
+" Last Changed:	Fri 22 Apr 2016 10:15:23 AM PDT
 " Version:	0.1
 "
 " Description:
@@ -15,7 +15,7 @@ endif
 " Commands
 " {{{
 " Usage: Bab ab rep rrep gobble eval suffix
-command! -nargs=+ Bab	:AbDef  <buffer> \\\\ <args>
+command! -nargs=* Bab	:AbDef  <buffer> \\\\ <args>
 
 " Commands with arguments
 function! s:new_command( ab, cmd, opt )
@@ -45,21 +45,23 @@ Babo sss	subsubsection
 Babo para	paragraph
 Babo sp	subparagraph
 
-Bab  mb	mathbb
-Bab  mc	mathcal
-Bab  ms	mathscr
-Bab  li	linewidth	    	NONE [\ \t]
-Bab  inc	includegraphics[width=	NONE [\ \t]
-Bab  in	includegraphics[width=	NONE 1 0 [
-Bab  in	includegraphics		NONE 0 0 {
-Bab  dis	displaystyle
-Baba tb	textbf
-Baba em	emph
-Baba on operatorname
-Baba te	text
-Baba tt	texttt
-"Baba tit	textit
-Bab  it	item
+Bab  mb  mathbb
+Bab  mc  mathcal
+Bab  ms  mathscr
+Bab  li  linewidth	    	NONE [\ \t]
+Bab  inc includegraphics[width=	NONE [\ \t]
+Bab  in  includegraphics[width=	NONE 1 0 [
+Bab  in  includegraphics		NONE 0 0 {
+Bab  dis displaystyle
+Baba tb  textbf
+Baba em  emph
+Baba on  operatorname
+Baba te  text
+Baba tt  texttt
+"Baba tit textit
+Bab  it  item
+Bab  qd  quad
+Bab  qq  qquad
 
 Baba lab	label
 Bab  la	label 	    	    	NONE 0 0 {
