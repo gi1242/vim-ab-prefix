@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 22 Apr 2016 10:15:23 AM PDT
+" Last Changed:	Sat 07 May 2016 02:13:37 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -92,6 +92,9 @@ Bab  bcap	bigcap
 Bab  cu		cup
 Bab  ca		cap
 Bab  es		emptyset
+Bab  co		colon
+Bab  co		color 	    	    	NONE 0 0 {
+Bab  sm		setminus
 
 Baba fr		frac
 Babo sq		sqrt
@@ -346,6 +349,11 @@ function! s:greek( ab, exp )
 		\ 'd'.a:ab, ', d\'.a:exp )
     call AbDefineExpansion( '<buffer>', '\\',
 		\ 'p'.a:ab, 'partial_\'.a:exp )
+
+    for i in range(0, 9)
+	call AbDefineExpansion( '<buffer>', '\\',
+		\ a:ab.i, a:exp.'^'.i )
+    endfor
 endfunction
 command! -nargs=+ Gab	:call s:greek( <f-args> )
 
@@ -526,13 +534,15 @@ Dref Fis    Figures~\ref{fgr
 " Colors
 " {{{
 function! s:new_color( color, sab, ab ) "{{{
+    call AbDefineExpansion( '<buffer>', '\\', 'co'.a:sab,
+		\ 'color{'.a:color.'}', '', '[ \t]' )
     call AbDefineExpansion( '<buffer>', '\\', 'tc'.a:sab,
 		\ 'textcolor{'.a:color.'}{', '', '[ \t{]' )
     if len( a:sab ) > 1
-	call AbDefineExpansion( '<buffer>', '\\textcolor{', a:sab,
+	call AbDefineExpansion( '<buffer>', '\v\\%(text)?color\{', a:sab,
 		    \ a:color, '', '[ \t]' )
     endif
-    call AbDefineExpansion( '<buffer>', '\\textcolor{', a:ab,
+    call AbDefineExpansion( '<buffer>', '\v\\%(text)?color\{', a:ab,
 		\ a:color, '', '[ \t]' )
 endfunction " }}}
 
