@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sat 07 May 2016 02:13:37 PM EDT
+" Last Changed:	Tue 17 May 2016 04:51:26 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -350,9 +350,16 @@ function! s:greek( ab, exp )
     call AbDefineExpansion( '<buffer>', '\\',
 		\ 'p'.a:ab, 'partial_\'.a:exp )
 
-    for i in range(0, 9)
+    " Suffixing 2--9 gets an automatic superscript
+    for i in range(2, 9)
 	call AbDefineExpansion( '<buffer>', '\\',
 		\ a:ab.i, a:exp.'^'.i )
+    endfor
+
+    " Suffixing 0--1 gets an automatic subscript
+    for i in [0, 1]
+	call AbDefineExpansion( '<buffer>', '\\',
+		\ a:ab.i, a:exp.'_'.i )
     endfor
 endfunction
 command! -nargs=+ Gab	:call s:greek( <f-args> )
