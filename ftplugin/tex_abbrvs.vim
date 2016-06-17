@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Tue 17 May 2016 04:51:26 PM EDT
+" Last Changed:	Fri 03 Jun 2016 08:17:36 AM EDT
 " Version:	0.1
 "
 " Description:
@@ -36,14 +36,17 @@ command! -nargs=+ Babo	:call s:new_command( <f-args>, 1 )
 
 " Misc commands that take an argument.
 " (Insert trailing { forcibly, and ignore next typed char)
-"Bab	beg	begin{			NONE [[:space:]{] 
-Bab	 be	begin		    	NONE 0 0 {
-Baba beg	begin
 Babo sec	section
 Babo ss	subsection
 Babo sss	subsubsection
 Babo para	paragraph
 Babo sp	subparagraph
+
+"Bab beg	begin{			NONE [[:space:]{] 
+Bab  be	begin		    	NONE 0 0 {
+Baba beg	begin
+Bab  bg		begingroup
+Bab  eg		endgroup
 
 Bab  mb  mathbb
 Bab  mc  mathcal
