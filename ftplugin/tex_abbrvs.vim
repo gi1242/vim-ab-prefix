@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 03 Jun 2016 08:17:36 AM EDT
+" Last Changed:	Fri 15 Jul 2016 12:00:46 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -115,7 +115,7 @@ Babo pb	parbox
 Baba rb	raisebox
 
 " References
-Bab  eq	eqref{eqn		NONE .
+Bab  eq	eqref{e:		NONE .
 Bab  cr	cref			NONE 0 0 {
 Baba crr	crefrange
 Babo ci	cite
@@ -498,47 +498,52 @@ function! s:define_reference( ab, rep )
 endfunction
 command! -nargs=+ Dref :call s:define_reference( <f-args> )
 
-Dref th	    theorem~\ref{thm
-Dref Th	    Theorem~\ref{thm
-Dref ths    theorems~\ref{thm
-Dref Ths    Theorems~\ref{thm
-Dref le	    lemma~\ref{lma
-Dref Le	    Lemma~\ref{lma
-Dref les    lemmas~\ref{lma
-Dref Les    Lemmas~\ref{lma
-Dref co	    corollary~\ref{cly
-Dref cos    corollaries~\ref{cly
-Dref Co	    Corollary~\ref{cly
-Dref Cos    Corollaries~\ref{cly
-Dref pr	    proposition~\ref{ppn
-Dref prs    propositions~\ref{ppn
-Dref Pr	    Proposition~\ref{ppn
-Dref Prs    Propositions~\ref{ppn
-Dref de	    definition~\ref{ppn
-Dref des    definitions~\ref{ppn
-Dref De	    Definition~\ref{ppn
-Dref Des    Definitions~\ref{ppn
-Dref eq	    equation~\eqref{eqn
-Dref Eq	    Equation~\eqref{eqn
-Dref eqs    equations~\eqref{eqn
-Dref Eqs    Equations~\eqref{eqn
-Dref ieq    inequality~\eqref{eqn
-Dref Ieq    Inequality~\eqref{eqn
-Dref ieqs   inequalities~\eqref{eqn
-Dref Ieqs   Inequalities~\eqref{eqn
-Dref sy     system~\eqref{eqn
-Dref se	    section~\ref{sxn
-Dref Se	    Section~\ref{sxn
-Dref ses    sections~\ref{sxn
-Dref Ses    Sections~\ref{sxn
-Dref ap	    appendix~\ref{sxn
-Dref aps    appendices~\ref{sxn
-Dref Ap	    Appendix~\ref{sxn
-Dref Aps    Appendices~\ref{sxn
-Dref fi	    figure~\ref{fgr
-Dref fis    figures~\ref{fgr
-Dref Fi	    Figure~\ref{fgr
-Dref Fis    Figures~\ref{fgr
+Dref aps    appendices~\ref{s:
+Dref Aps    Appendices~\ref{s:
+Dref ap	    appendix~\ref{s:
+Dref Ap	    Appendix~\ref{s:
+Dref cos    corollaries~\ref{c:
+Dref Cos    Corollaries~\ref{c:
+Dref co	    corollary~\ref{c:
+Dref Co	    Corollary~\ref{c:
+Dref de	    definition~\ref{d:
+Dref De	    Definition~\ref{d:
+Dref des    definitions~\ref{d:
+Dref Des    Definitions~\ref{d:
+Dref eq	    equation~\eqref{e:
+Dref Eq	    Equation~\eqref{e:
+Dref eqs    equations~\eqref{e:
+Dref Eqs    Equations~\eqref{e:
+Dref fi	    figure~\ref{f:
+Dref Fi	    Figure~\ref{f:
+Dref fis    figures~\ref{f:
+Dref Fis    Figures~\ref{f:
+Dref in	    inequality~\eqref{e:
+Dref In	    Inequality~\eqref{e:
+Dref ins    inequalities~\eqref{e:
+Dref Ins    Inequalities~\eqref{e:
+Dref le	    lemma~\ref{l:
+Dref Le	    Lemma~\ref{l:
+Dref les    lemmas~\ref{l:
+Dref Les    Lemmas~\ref{l:
+Dref pr	    proposition~\ref{p:
+Dref Pr	    Proposition~\ref{p:
+Dref prs    propositions~\ref{p:
+Dref Prs    Propositions~\ref{p:
+Dref re	    remark~\ref{r:
+Dref Re	    Remark~\ref{r:
+Dref res    remarks~\ref{r:
+Dref Res    Remarks~\ref{r:
+Dref se	    section~\ref{s:
+Dref Se	    Section~\ref{s:
+Dref ses    sections~\ref{s:
+Dref Ses    Sections~\ref{s:
+Dref sy     system~\eqref{e:
+Dref th	    theorem~\ref{t:
+Dref Th	    Theorem~\ref{t:
+Dref ths    theorems~\ref{t:
+Dref Ths    Theorems~\ref{t:
+
 " }}}
 
 " Colors
