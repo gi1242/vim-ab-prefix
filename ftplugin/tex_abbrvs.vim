@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Fri 15 Jul 2016 12:00:46 PM EDT
+" Last Changed:	Sat 06 Aug 2016 10:06:33 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -518,10 +518,10 @@ Dref fi	    figure~\ref{f:
 Dref Fi	    Figure~\ref{f:
 Dref fis    figures~\ref{f:
 Dref Fis    Figures~\ref{f:
-Dref in	    inequality~\eqref{e:
-Dref In	    Inequality~\eqref{e:
-Dref ins    inequalities~\eqref{e:
-Dref Ins    Inequalities~\eqref{e:
+Dref ie	    inequality~\eqref{e:
+Dref Ie	    Inequality~\eqref{e:
+Dref ies    inequalities~\eqref{e:
+Dref Ies    Inequalities~\eqref{e:
 Dref le	    lemma~\ref{l:
 Dref Le	    Lemma~\ref{l:
 Dref les    lemmas~\ref{l:
