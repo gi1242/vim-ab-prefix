@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sat 06 Aug 2016 10:06:33 PM EDT
+" Last Changed:	Thu 29 Sep 2016 01:58:07 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -98,6 +98,7 @@ Bab  es		emptyset
 Bab  co		colon
 Bab  co		color 	    	    	NONE 0 0 {
 Bab  sm		setminus
+Bab  we		wedge
 
 Baba fr		frac
 Babo sq		sqrt
