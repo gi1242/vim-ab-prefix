@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Thu 29 Sep 2016 01:58:07 PM EDT
+" Last Changed:	Mon 17 Oct 2016 06:40:00 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -464,6 +464,14 @@ Sab Rn	\R^n \R^
 Sab R2	\R^2
 Sab R3	\R^3
 Sab R4	\R^4
+
+" Requires \newcommand{\T}{\mathbb{T}}
+Sab Td	\T^d \T^
+Sab Tm	\T^m \T^
+Sab Tn	\T^n \T^
+Sab T2	\T^2
+Sab T3	\T^3
+"Sab T4	\T^4
 
 Sab Hs	H^s H^
 Sab H1	H^1
