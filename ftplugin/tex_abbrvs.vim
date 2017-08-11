@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Mon 17 Oct 2016 06:40:00 PM EDT
+" Last Changed:	Sat 05 Aug 2017 01:14:15 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -52,16 +52,18 @@ Bab  mb  mathbb
 Bab  mc  mathcal
 Bab  ms  mathscr
 Bab  li  linewidth	    	NONE [\ \t]
+Bab  li  lim	    	NONE 0 0 _
 Bab  inc includegraphics[width=	NONE [\ \t]
 Bab  in  includegraphics[width=	NONE 1 0 [
 Bab  in  includegraphics		NONE 0 0 {
+Bab  in  int			NONE 0 0 _
 Bab  dis displaystyle
 Baba tb  textbf
 Baba em  emph
 Baba on  operatorname
 Baba te  text
 Baba tt  texttt
-"Baba tit textit
+Baba tit textit
 Bab  it  item
 Bab  qd  quad
 Bab  qq  qquad
@@ -129,26 +131,15 @@ Bab pa	partial NONE 0 0 ^
 Bab pa	partial NONE 0 0 \ 
 Bab pa	partial NONE 0 0 \\
 
-Bab	pai	partial_i
-Bab	pj	partial_j
-Bab	pk	partial_k
-Bab	pr	partial_r
-Bab	pah	partial_h
-Bab	ps	partial_s
-Bab	pt	partial_t
-Bab	px	partial_x
-Bab	py	partial_y
-Bab	pz	partial_z
-Bab	p0	partial_0
-Bab	p1	partial_1
-Bab	p2	partial_2
-Bab	p3	partial_3
-Bab	p4	partial_4
-Bab	p5	partial_5
-Bab	p6	partial_6
-Bab	p7	partial_7
-Bab	p8	partial_8
-Bab	p9	partial_9
+unlet! s
+for s in  [['ai','i'], 'j', 'k', ['ah', 'h'],
+	    \ 'r', 's', 't', 'x', 'y', 'z', '0', '1', '2', '3' ]
+    let [v, vx] = (type(s) == type('') ? [s, s] : s )
+    exe 'Bab' 'p'.v 'partial_'.vx
+    exe 'Bab' 'p'.v.'2' 'partial_'.vx.'^2'
+    exe 'Bab' 'p'.v.'3' 'partial_'.vx.'^3'
+    unlet s
+endfor
 
 Bab ir    int_\R
 Bab ir2   int_{\R^2}
@@ -158,6 +149,7 @@ Bab irn   int_{\R^n}
 Bab irp   int_{\R^+}
 Bab ir    int_{\R	    NONE 0 0 ^
 Bab iz    int_0^	    NONE [\ \t^]
+Bab iz1   int_0^1
 Bab izt   int_0^t
 Bab izT   int_0^T
 Bab izi   int_0^\infty
@@ -189,6 +181,56 @@ Bab fr7	frac{7}{    		NONE [\ \t{]
 Bab fr8	frac{8}{    		NONE [\ \t{]
 Bab fr9	frac{9}{    		NONE [\ \t{]
 " }}}
+
+" Limits of sums and integrals
+" {{{
+command! -nargs=+ Lab	:AbDef  <buffer> _ <args>
+command! -nargs=+ Sbab	:AbDef  <buffer> [_^] <args>
+
+" Sums
+for s in ['0', '1']
+    unlet! en
+    for en in [ 'n', 'N', 'd', ['oo','\infty'], ]
+	let [e, ex] = (type(en) == type('') ? [en, en] : en )
+	exe 'Lab' s.e s.'^{'.ex.'}'
+	for v in ['i', 'j', 'k']
+	    exe 'Lab' v.s.e '{'.v.'='.s.'}^{'.ex.'}'
+	endfor
+	unlet en
+    endfor
+endfor
+unlet s
+
+" Integrals
+for sn in [ ['moo','-\infty'], ['mp', '-\pi'], ['m1','-1'], '0' ]
+    let [s, sx] = (type(sn) == type('') ? [sn, sn] : sn )
+    for en in [ 't', 'T', ['p','\pi'], '0', '1', ['oo', '\infty']]
+	let [e, ex] = (type(en) == type('') ? [en, en] : en )
+	exe 'Lab' s.e '{'.sx.'}^{'.ex.'}'
+	unlet en
+    endfor
+    unlet sn
+endfor
+
+" Limits
+for v in [ 'x', 'y', 'z', 't', 's' ]
+    for ln in [ '0', '1', ['moo','-\infty'], ['mp', '-\pi'], ['m1','-1'],
+	    \ ['p','\pi'], ['oo', '\infty'], 'a']
+	let [l, lx] = (type(ln) == type('') ? [ln, ln] : ln )
+	exe 'Lab' v.l '{'.v.'\to\ '.lx.'}'
+	unlet ln
+    endfor
+endfor
+Lab e0 {\\epsilon\\to\ 0}
+unlet v l lx
+
+unlet! s sx sn
+for s in ['i', 'j', 'k', 'm', 'n']
+    exe 'Sbab' s.'p1' '{'.s.'+1}'
+    exe 'Sbab' s.'m1' '{'.s.'-1}'
+endfor
+" }}}
+
 
 " Environments
 " {{{
