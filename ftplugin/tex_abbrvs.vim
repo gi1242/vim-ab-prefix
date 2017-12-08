@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sat 05 Aug 2017 01:14:15 PM EDT
+" Last Changed:	Mon 04 Dec 2017 09:04:54 PM EST
 " Version:	0.1
 "
 " Description:
@@ -111,6 +111,7 @@ Bab ti	tilde
 Baba wt	widetilde
 Bab ba	bar
 Bab ha	hat
+Baba wh	widehat
 Bab do	dot
 Bab dd	ddot
 
@@ -202,9 +203,11 @@ endfor
 unlet s
 
 " Integrals
-for sn in [ ['moo','-\infty'], ['mp', '-\pi'], ['m1','-1'], '0' ]
+for sn in [ ['mi', '-\infty'], ['moo','-\infty'],
+	    \ ['mp', '-\pi'], ['m1','-1'], '0' ]
     let [s, sx] = (type(sn) == type('') ? [sn, sn] : sn )
-    for en in [ 't', 'T', ['p','\pi'], '0', '1', ['oo', '\infty']]
+    for en in [ 't', 'T', ['p','\pi'], '0', '1',
+		\ ['oo', '\infty'], ['i', '\infty'] ]
 	let [e, ex] = (type(en) == type('') ? [en, en] : en )
 	exe 'Lab' s.e '{'.sx.'}^{'.ex.'}'
 	unlet en
@@ -327,6 +330,7 @@ Cenvs	bde     definition
 Cenvs	bre     remark
 Cenvs	bex	example
 Cenv	bpr     proof
+Cenvs	bpb     problem
 
 " Misc environments
 Cenv	bdo     document
@@ -373,6 +377,8 @@ function! s:greek( ab, exp )
     call AbDefineExpansion( '<buffer>', '\\',
 		\ a:ab.'h', 'hat \'.a:exp )
     call AbDefineExpansion( '<buffer>', '\\',
+		\ a:ab.'w', 'widehat{\'.a:exp.'}')
+    call AbDefineExpansion( '<buffer>', '\\',
 		\ a:ab.'b', 'bar \'.a:exp )
     call AbDefineExpansion( '<buffer>', '\\',
 		\ a:ab.'d', 'dot \'.a:exp )
@@ -384,6 +390,8 @@ function! s:greek( ab, exp )
 		\ 'ti'.a:ab, 'tilde \'.a:exp )
     call AbDefineExpansion( '<buffer>', '\\',
 		\ 'ha'.a:ab, 'hat \'.a:exp )
+    call AbDefineExpansion( '<buffer>', '\\',
+		\ 'wh'.a:ab, 'widehat{\'.a:exp.'}' )
     call AbDefineExpansion( '<buffer>', '\\',
 		\ 'ba'.a:ab, 'bar \'.a:exp )
     call AbDefineExpansion( '<buffer>', '\\',
@@ -577,6 +585,10 @@ Dref le	    lemma~\ref{l:
 Dref Le	    Lemma~\ref{l:
 Dref les    lemmas~\ref{l:
 Dref Les    Lemmas~\ref{l:
+Dref pb	    problem~\ref{p:
+Dref Pb	    Problem~\ref{p:
+Dref pbs    problems~\ref{p:
+Dref Pbs    Problems~\ref{p:
 Dref pr	    proposition~\ref{p:
 Dref Pr	    Proposition~\ref{p:
 Dref prs    propositions~\ref{p:
