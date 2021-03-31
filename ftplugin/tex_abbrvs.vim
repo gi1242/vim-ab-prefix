@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Mon 04 Dec 2017 09:04:54 PM EST
+" Last Changed:	Sat 31 Oct 2020 11:01:35 AM EDT
 " Version:	0.1
 "
 " Description:
@@ -51,6 +51,7 @@ Bab  eg		endgroup
 Bab  mb  mathbb
 Bab  mc  mathcal
 Bab  ms  mathscr
+Bab  mf  mathfrak
 Bab  li  linewidth	    	NONE [\ \t]
 Bab  li  lim	    	NONE 0 0 _
 Bab  inc includegraphics[width=	NONE [\ \t]
@@ -64,6 +65,8 @@ Baba on  operatorname
 Baba te  text
 Baba tt  texttt
 Baba tit textit
+Baba mi  mathit
+Baba mrm  mathrm
 Bab  it  item
 Bab  qd  quad
 Bab  qq  qquad
@@ -114,14 +117,13 @@ Bab ha	hat
 Baba wh	widehat
 Bab do	dot
 Bab dd	ddot
+Bab mr	mathring
 
 Babo pb	parbox
 Baba rb	raisebox
 
 " References
 Bab  eq	eqref{e:		NONE .
-Bab  cr	cref			NONE 0 0 {
-Baba crr	crefrange
 Babo ci	cite
 Bab  cl	citelist{\cite{		NONE .
 
@@ -154,6 +156,7 @@ Bab iz1   int_0^1
 Bab izt   int_0^t
 Bab izT   int_0^T
 Bab izi   int_0^\infty
+Bab imii  int_{-\infty}^\infty
 "Bab int	    int_{	    NONE 0 0 -
 
 Bab qu	question
@@ -186,7 +189,7 @@ Bab fr9	frac{9}{    		NONE [\ \t{]
 " Limits of sums and integrals
 " {{{
 command! -nargs=+ Lab	:AbDef  <buffer> _ <args>
-command! -nargs=+ Sbab	:AbDef  <buffer> [_^] <args>
+command! -nargs=+ ScAb	:AbDef  <buffer> [_^] <args>
 
 " Sums
 for s in ['0', '1']
@@ -206,6 +209,9 @@ unlet s
 for sn in [ ['mi', '-\infty'], ['moo','-\infty'],
 	    \ ['mp', '-\pi'], ['m1','-1'], '0' ]
     let [s, sx] = (type(sn) == type('') ? [sn, sn] : sn )
+    if sx != s
+	exe 'Lab' s '{'.sx.'} NONE 0 0 ^'
+    endif
     for en in [ 't', 'T', ['p','\pi'], '0', '1',
 		\ ['oo', '\infty'], ['i', '\infty'] ]
 	let [e, ex] = (type(en) == type('') ? [en, en] : en )
@@ -227,11 +233,11 @@ endfor
 Lab e0 {\\epsilon\\to\ 0}
 unlet v l lx
 
-unlet! s sx sn
 for s in ['i', 'j', 'k', 'm', 'n']
-    exe 'Sbab' s.'p1' '{'.s.'+1}'
-    exe 'Sbab' s.'m1' '{'.s.'-1}'
+    exe 'ScAb' s.'p1' '{'.s.'+1}'
+    exe 'ScAb' s.'m1' '{'.s.'-1}'
 endfor
+unlet! s sx sn
 " }}}
 
 
@@ -301,8 +307,8 @@ Cenvs	bga	gather
 Cenvs	bfl	flalign
 Cenvs	bml	multline
 Cenvs	bmu	multline
-Cenvs	bala	alignat
-Cenvs	balat	alignat
+Cenvs	baa	alignat
+Cenv	bse	subequations
 
 " Math alignment building blocks
 Cenv	bsp	split
@@ -346,9 +352,11 @@ Cenv	bmp     minipage
 Cenv	bmi     minipage
 Cenv	bquo	quote
 Cenv	bque	questions
-Cenv	bqu	quote
+Cenv	bqu	question
 Cenv	bpa	parts
 Cenv	bfi     figure
+Cenv	bcm	comment
+Cenv	bcom	comment
 
 " Automatically close environments
 function! CloseEnv()
@@ -415,6 +423,10 @@ function! s:greek( ab, exp )
 	call AbDefineExpansion( '<buffer>', '\\',
 		\ a:ab.i, a:exp.'_'.i )
     endfor
+
+    " Adding * gets a super-script
+    call AbDefineExpansion( '<buffer>', '\\',
+		\ a:ab, a:exp.'^', '', 0, 0, '*' )
 endfunction
 command! -nargs=+ Gab	:call s:greek( <f-args> )
 
@@ -514,6 +526,14 @@ Sab Rn	\R^n \R^
 Sab R2	\R^2
 Sab R3	\R^3
 Sab R4	\R^4
+
+" Requires \newcommand{\Z}{\mathbb{Z}}
+Sab Zd	\Z^d \Z^
+Sab Zm	\Z^m \Z^
+Sab Zn	\Z^n \Z^
+Sab Z2	\Z^2
+Sab Z3	\Z^3
+"Sab Z4	\Z^4
 
 " Requires \newcommand{\T}{\mathbb{T}}
 Sab Td	\T^d \T^
@@ -626,7 +646,7 @@ endfunction " }}}
 
 command! -nargs=+ ColDef :call s:new_color( <f-args> )
 
-Bab	    tc	textcolor{		NONE [\ t{]
+Bab	    tc	textcolor{		NONE [\ \t{]
 
 ColDef  blue    b bl
 ColDef  red	    r re
@@ -649,7 +669,9 @@ ColDef  black   k bk
 " endfunction
 " AbDef <buffer> .\? $$ DollarDollar() NONE [\ \t] 1
 
-AbDef <buffer> .\? $$ \begin{equation*} \n\end{equation*} [\ \t] 0
+if &ft == 'tex'
+    AbDef <buffer> .\? $$ \begin{equation*} \n\end{equation*} [\ \t] 0
+endif
 
 " }}}
 
