@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sat 31 Oct 2020 11:01:35 AM EDT
+" Last Changed:	Sat 23 Oct 2021 12:37:15 PM EDT
 " Version:	0.1
 "
 " Description:
@@ -34,13 +34,20 @@ endfunction
 command! -nargs=+ Baba	:call s:new_command( <f-args>, 0 )
 command! -nargs=+ Babo	:call s:new_command( <f-args>, 1 )
 
+" st, nd, th
+AbDef <buffer> \^ st \\text{st}
+AbDef <buffer> \^ nd \\text{nd}
+AbDef <buffer> \^ rd \\text{rd}
+AbDef <buffer> \^ th \\text{th}
+
+
 " Misc commands that take an argument.
 " (Insert trailing { forcibly, and ignore next typed char)
 Babo sec	section
 Babo ss	subsection
 Babo sss	subsubsection
 Babo para	paragraph
-Babo sp	subparagraph
+Babo spar	subparagraph
 
 "Bab beg	begin{			NONE [[:space:]{] 
 Bab  be	begin		    	NONE 0 0 {
