@@ -1,7 +1,7 @@
 " Vim plugin to conditionally expand abbreviations on a matching prefix.
 " Maintainer:	GI <gi1242@nospam.com> (replace nospam with gmail)
 " Created:	Sat 05 Jul 2014 08:46:04 PM WEST
-" Last Changed:	Sat 23 Oct 2021 12:37:15 PM EDT
+" Last Changed:	Wed 21 Dec 2022 08:59:03 PM EST
 " Version:	0.1
 "
 " Description:
@@ -107,16 +107,19 @@ Bab  bcap	bigcap
 Bab  cu		cup
 Bab  ca		cap
 Bab  es		emptyset
+Bab  vn		varnothing
 Bab  co		colon
 Bab  co		color 	    	    	NONE 0 0 {
 Bab  sm		setminus
 Bab  we		wedge
 
-Baba fr		frac
+"Baba fr		frac
+"Baba tfr	tfrac
 Babo sq		sqrt
 Baba tsub	textsubscript
 Baba tsup	textsuperscript
 
+Bab ck	check
 Bab ti	tilde
 Baba wt	widetilde
 Bab ba	bar
@@ -173,24 +176,24 @@ Bab	oo	infty
 Bab st	star
 Bab cd	cdot
 
-Bab fr12	frac{1}{2}
-Bab fr13	frac{1}{3}
-Bab fr14	frac{1}{4}
-Bab fr15	frac{1}{5}
-Bab fr16	frac{1}{6}
-Bab fr17	frac{1}{7}
-Bab fr18	frac{1}{8}
-Bab fr19	frac{1}{9}
+"Bab fr12	frac{1}{2}
+"Bab fr13	frac{1}{3}
+"Bab fr14	frac{1}{4}
+"Bab fr15	frac{1}{5}
+"Bab fr16	frac{1}{6}
+"Bab fr17	frac{1}{7}
+"Bab fr18	frac{1}{8}
+"Bab fr19	frac{1}{9}
 
-Bab fr1	frac{1}{    		NONE [\ \t{]
-Bab fr2	frac{2}{    		NONE [\ \t{]
-Bab fr3	frac{3}{    		NONE [\ \t{]
-Bab fr4	frac{4}{    		NONE [\ \t{]
-Bab fr5	frac{5}{    		NONE [\ \t{]
-Bab fr6	frac{6}{    		NONE [\ \t{]
-Bab fr7	frac{7}{    		NONE [\ \t{]
-Bab fr8	frac{8}{    		NONE [\ \t{]
-Bab fr9	frac{9}{    		NONE [\ \t{]
+"Bab fr1	frac{1}{    		NONE [\ \t{]
+"Bab fr2	frac{2}{    		NONE [\ \t{]
+"Bab fr3	frac{3}{    		NONE [\ \t{]
+"Bab fr4	frac{4}{    		NONE [\ \t{]
+"Bab fr5	frac{5}{    		NONE [\ \t{]
+"Bab fr6	frac{6}{    		NONE [\ \t{]
+"Bab fr7	frac{7}{    		NONE [\ \t{]
+"Bab fr8	frac{8}{    		NONE [\ \t{]
+"Bab fr9	frac{9}{    		NONE [\ \t{]
 " }}}
 
 " Limits of sums and integrals
@@ -306,64 +309,67 @@ command! -nargs=+ Cenvf :call s:new_env( 1, 0, <f-args> )
 " Complete environment with fold markers and starred version
 command! -nargs=+ Cenvfs :call s:new_env( 1, 1, <f-args> )
 
-" Math equation environments
-Cenvs	beq	equation
-Cenvs	bal	align
-Cenvs	bali	align
-Cenvs	bga	gather
-Cenvs	bfl	flalign
-Cenvs	bml	multline
-Cenvs	bmu	multline
-Cenvs	baa	alignat
-Cenv	bse	subequations
+if 0
+  " Moved to snippets
+  " Math equation environments
+  Cenvs	beq	equation
+  Cenvs	bal	align
+  Cenvs	bali	align
+  Cenvs	bga	gather
+  Cenvs	bfl	flalign
+  Cenvs	bml	multline
+  Cenvs	bmu	multline
+  Cenvs	baa	alignat
+  Cenv	bse	subequations
 
-" Math alignment building blocks
-Cenv	bsp	split
-Cenv	bald	aligned
-Cenv	bgad	gathered
-Cenvs	bca	cases
-Cenvs	bdc	dcases
-Cenvs	bdca	dcases
-Cenv	bmld	multlined
-Cenv	bmud	multlined
+  " Math alignment building blocks
+  Cenv	bsp	split
+  Cenv	bald	aligned
+  Cenv	bgad	gathered
+  Cenvs	bca	cases
+  Cenvs	bdc	dcases
+  Cenvs	bdca	dcases
+  Cenv	bmld	multlined
+  Cenv	bmud	multlined
 
-" Math environments
-Cenv	bpm	pmatrix
-Cenv	bma	matrix
+  " Math environments
+  Cenv	bpm	pmatrix
+  Cenv	bma	matrix
 
-" Theorems, etc.
-Cenvs	bth	theorem
-Cenvs	ble     lemma
-Cenvs	bpp	proposition
-Cenvs	bco     corollary
-Cenvs	bconj   conjecture
-Cenvs	bcj	conjecture
-"Cenv	bqu	question
-Cenvs	bde     definition
-Cenvs	bre     remark
-Cenvs	bex	example
-Cenv	bpr     proof
-Cenvs	bpb     problem
+  " Theorems, etc.
+  Cenvs	bth	theorem
+  Cenvs	ble     lemma
+  Cenvs	bpp	proposition
+  Cenvs	bco     corollary
+  Cenvs	bconj   conjecture
+  Cenvs	bcj	conjecture
+  "Cenv	bqu	question
+  Cenvs	bde     definition
+  Cenvs	bre     remark
+  Cenvs	bex	example
+  Cenv	bpr     proof
+  Cenvs	bpb     problem
 
-" Misc environments
-Cenv	bdo     document
-Cenv	bce     center
-Cenv	brl     raggedleft
-Cenv	brr     raggedright
-Cenv	ben     enumerate
-Cenv	bit     itemize
-Cenv	bcen    compactenum
-Cenv	bcit    compactitem
-Cenv	bab     abstract
-Cenv	bmp     minipage
-Cenv	bmi     minipage
-Cenv	bquo	quote
-Cenv	bque	questions
-Cenv	bqu	question
-Cenv	bpa	parts
-Cenv	bfi     figure
-Cenv	bcm	comment
-Cenv	bcom	comment
+  " Misc environments
+  Cenv	bdo     document
+  Cenv	bce     center
+  Cenv	brl     raggedleft
+  Cenv	brr     raggedright
+  Cenv	ben     enumerate
+  Cenv	bit     itemize
+  Cenv	bcen    compactenum
+  Cenv	bcit    compactitem
+  Cenv	bab     abstract
+  Cenv	bmp     minipage
+  Cenv	bmi     minipage
+  Cenv	bquo	quote
+  Cenv	bque	questions
+  Cenv	bqu	question
+  Cenv	bpa	parts
+  Cenv	bfi     figure
+  Cenv	bcm	comment
+  Cenv	bcom	comment
+endif
 
 " Automatically close environments
 function! CloseEnv()
@@ -677,6 +683,7 @@ ColDef  black   k bk
 " AbDef <buffer> .\? $$ DollarDollar() NONE [\ \t] 1
 
 if &ft == 'tex'
+    "AbDef <buffer> .\? $$ \begin{equation*}<cr>\ \  \n\end{equation*} [\ \t] 0
     AbDef <buffer> .\? $$ \begin{equation*} \n\end{equation*} [\ \t] 0
 endif
 
